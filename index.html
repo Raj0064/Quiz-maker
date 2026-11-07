@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quiz to Google Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f3fa;--card:#fff;--ink:#1d1b2e;--mute:#6b6880;--line:#dedbee;--acc:#5b3fd0;--ok:#1e8e5a;--okbg:#e6f6ee;--bad:#c0392b;--badbg:#fdecea}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Bricolage Grotesque",system-ui,sans-serif}
+header{padding:20px 24px 8px}
+h1{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em}
+header p{margin:4px 0 0;color:var(--mute)}
+main{display:grid;grid-template-columns:minmax(300px,2fr) 3fr;gap:20px;padding:16px 24px 40px}
+@media(max-width:860px){main{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+textarea{width:100%;height:62vh;min-height:320px;border:1px solid var(--line);border-radius:10px;padding:12px;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;resize:vertical;color:var(--ink);background:#fbfbfe}
+textarea:focus,input:focus,button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+button{font:inherit;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 14px;border-radius:9px;cursor:pointer}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+button:disabled{opacity:.45;cursor:not-allowed}
+input[type=text],input[type=number]{font:inherit;border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+.stats{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-weight:600}
+.stats span{color:var(--mute);font-weight:400}
+.warnbox{background:var(--badbg);color:var(--bad);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:14px}
+.sec{margin:18px 0 8px;padding:8px 12px;border-left:5px solid var(--acc);background:#ece8fb;border-radius:0 8px 8px 0;font-weight:800}
+.q{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;background:#fff}
+.q.warn{border-color:var(--bad)}
+.q h3{margin:0 0 8px;font-size:15px;font-weight:600;white-space:pre-wrap}
+.q .n{color:var(--acc);font-weight:800;margin-right:4px}
+.pts{float:right;color:var(--mute);font-size:13px;margin-left:8px}
+.opt{padding:6px 10px;border:1px solid var(--line);border-radius:8px;margin:4px 0;display:flex;gap:8px}
+.opt.c{background:var(--okbg);border-color:var(--ok);color:#12633d;font-weight:600}
+.opt b{min-width:18px}
+.exp{margin-top:8px;color:var(--mute);font-size:13px;white-space:pre-wrap}
+.w{color:var(--bad);font-size:13px;margin-top:6px}
+.empty{color:var(--mute);text-align:center;padding:40px 0}
+.create{margin-top:18px;border-top:1px dashed var(--line);padding-top:14px}
+.tabs{display:flex;gap:6px;margin:10px 0}
+.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+pre{background:#14122a;color:#e7e4ff;border-radius:10px;padding:12px;max-height:240px;overflow:auto;font-size:12px}
+.link{margin-top:12px;padding:12px;background:var(--okbg);border:1px solid var(--ok);border-radius:10px;word-break:break-all}
+.hint{font-size:13px;color:var(--mute)}
+details{margin-top:10px}
+label.chk{display:flex;gap:8px;align-items:center;font-weight:600}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.badge{display:inline-block;padding:4px 10px;border-radius:99px;font-size:13px;font-weight:600;margin-right:8px}
+.badge.ok{background:var(--okbg);color:#12633d}.badge.no{background:var(--badbg);color:var(--bad)}
+#settings{margin:0 24px 4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+.setup{list-style:none;padding:0;margin:0}
+.setup li{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;background:#fbfbfe}
+.setup li.done{background:var(--okbg);border-color:var(--ok)}
+.setup label{display:flex;gap:8px;font-weight:600;cursor:pointer}
+.setup p{margin:4px 0 0 26px;color:var(--mute);font-size:13px}
+.setup a{color:var(--acc)}
+code{background:#ece8fb;padding:1px 6px;border-radius:5px;font-size:13px}
+.fld{margin-bottom:12px}.fld>label{display:block;font-weight:600;margin-bottom:4px}
+
+html{-webkit-text-size-adjust:100%}
+body{overflow-wrap:anywhere;padding-bottom:env(safe-area-inset-bottom,0)}
+.mtabs{display:none}
+@media(max-width:860px){
+  header{padding:14px 14px 4px}
+  h1{font-size:22px}
+  main{padding:10px 14px 90px;gap:12px}
+  #settings{margin:0 14px 4px}
+  .panel{padding:12px;border-radius:12px}
+  textarea{height:55vh;min-height:260px;font-size:16px}
+  input[type=text],input[type=number]{font-size:16px;padding:12px}
+  button{min-height:44px;padding:10px 14px}
+  .row{gap:8px}.row button{flex:1 1 auto}
+  .tabs{flex-wrap:wrap}.tabs button{flex:1 1 100%}
+  .stats{gap:8px 14px;font-size:14px}
+  .q{padding:12px}.q h3{font-size:15px}
+  .opt{padding:9px 10px}
+  pre{font-size:11px;max-height:200px;white-space:pre-wrap}
+  #settings .grid2{gap:12px}
+  .mtabs{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;background:#fff;border-top:1px solid var(--line);padding:8px 12px calc(8px + env(safe-area-inset-bottom,0));gap:8px}
+  .mtabs button{flex:1}
+  .mtabs button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+  body[data-view=edit] #prev{display:none}
+  body[data-view=prev] #edit{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Quiz to Google Form</h1>
+  <p>Paste your exam text, check the preview, then create the form.</p></div>
+  <div><span id="badge" class="badge no"></span><button id="gear">Settings</button></div>
+</header>
+<section id="settings" class="panel" hidden>
+  <div class="grid2">
+    <div>
+      <h2 style="margin:0 0 10px;font-size:18px">Setup guide (one time only)</h2>
+      <div id="originwarn"></div>
+      <ol class="setup" id="steps"></ol>
+    </div>
+    <div>
+      <h2 style="margin:0 0 10px;font-size:18px">Saved settings</h2>
+      <div class="fld"><label for="cid">Google OAuth Client ID</label>
+        <input type="text" id="cid" placeholder="xxxx.apps.googleusercontent.com"></div>
+      <div class="fld"><label for="dm">Default marks (used when your text has no "Default marks" line)</label>
+        <input type="number" id="dm" min="0" step="0.5"></div>
+      <div class="fld"><label class="chk"><input type="checkbox" id="req"> Make every question required</label></div>
+      <div class="fld"><label class="chk"><input type="checkbox" id="shuf"> Shuffle options in Google Form</label></div>
+      <div class="row">
+        <button class="pri" id="test">Test Google sign-in</button>
+        <button id="reset">Reset all settings</button>
+      </div>
+      <p class="hint" id="testmsg"></p>
+      <p class="hint">Everything is saved in this browser for this address. Always open the tool from the same address, or the settings won't be found.</p>
+    </div>
+  </div>
+</section>
+<main>
+  <section class="panel" id="edit">
+    <textarea id="src" spellcheck="false" aria-label="Exam text"></textarea>
+    <div class="row">
+      <button id="sample">Load sample</button>
+      <button id="clear">Clear</button>
+      <button id="copyfmt">Copy format guide</button>
+    </div>
+    <details>
+      <summary>Format guide</summary>
+      <pre id="guide">Title: My Exam           (optional)
+Description: Instructions  (optional)
+Default marks 1           (optional, default 1)
+
+SECTION: Section name     (optional, starts a new page)
+
+1. Question text
+A. Option
+B. Option
+C. Option
+D. Option
+Answer: B                 (one correct option only)
+Marks: 2                  (optional, overrides default)
+Explanation: Why B is right</pre>
+    </details>
+  </section>
+
+  <section class="panel" id="prev">
+    <div class="stats" id="stats"></div>
+    <div id="warns"></div>
+    <div id="preview"></div>
+
+    <div class="create">
+      <label class="chk"><input type="checkbox" id="ok"> I checked the preview, everything is correct</label>
+      <div class="tabs">
+        <button id="t2" class="on">One-click: Google sign-in</button>
+        <button id="t1">Backup: Apps Script</button>
+      </div>
+
+      <div id="p1" hidden>
+        <p class="hint">Creates the form in your own Google account. Copy the script, open <b>script.google.com</b>, make a new project, paste, press Run, approve access. The form links show in the log.</p>
+        <div class="row"><button class="pri" id="gen" disabled>Generate script</button><button id="copyjs" disabled>Copy script</button></div>
+        <pre id="js" hidden></pre>
+      </div>
+
+      <div id="p2">
+        <p class="hint" id="setupmsg"></p>
+        <div class="row"><button class="pri" id="make" disabled>Create Google Form</button></div>
+      </div>
+      <div id="result"></div>
+    </div>
+  </section>
+</main>
+<nav class="mtabs" aria-label="View"><button id="vedit" class="on">Edit text</button><button id="vprev">Preview &amp; create</button></nav>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+const $=id=>document.getElementById(id);
+const DEF={cid:'',defMarks:1,required:true,shuffle:false,steps:{}};
+let S;try{S={...DEF,...JSON.parse(localStorage.getItem('quizset')||'{}')}}catch(e){S={...DEF}}
+const save=()=>{try{localStorage.setItem('quizset',JSON.stringify(S))}catch(e){}};
+const ORIGIN=location.origin;const onFile=location.protocol==='file:';
+const STEPS=[
+ ['Create a Google Cloud project','Open <a href="https://console.cloud.google.com/projectcreate" target="_blank" rel="noopener">Create project</a>, name it "Quiz Maker" and press Create.'],
+ ['Turn on the Google Forms API','Open <a href="https://console.cloud.google.com/apis/library/forms.googleapis.com" target="_blank" rel="noopener">Forms API</a>, make sure your project is selected at the top, press Enable.'],
+ ['Set up the consent screen','Open <a href="https://console.cloud.google.com/auth/overview" target="_blank" rel="noopener">Google Auth platform</a>, press Get started, fill app name and your email, choose External, finish. Then under Audience add your own Gmail as a Test user.'],
+ ['Create the Client ID','Open <a href="https://console.cloud.google.com/auth/clients" target="_blank" rel="noopener">Clients</a>, press Create client, type Web application. Under Authorized JavaScript origins add exactly: <code id="orig">'+ORIGIN+'</code> <button id="copyorig" style="padding:2px 8px">Copy</button>. Press Create.'],
+ ['Paste the Client ID here','Copy the Client ID shown after creation, paste it into the field on this page. It saves automatically.'],
+ ['Test sign-in','Press Test Google sign-in. Approve once. Done, you never repeat this.']
+];
+function renderSettings(){
+  $('cid').value=S.cid;$('dm').value=S.defMarks;$('req').checked=S.required;$('shuf').checked=S.shuffle;
+  $('originwarn').innerHTML=onFile?'<div class="warnbox">You opened this as a file (file://). Google blocks sign-in from here. In the folder with this file run <code>python3 -m http.server 8000</code>, then open <code>http://localhost:8000/quiz-to-google-form.html</code> and use that same address from now on.</div>':'';
+  $('steps').innerHTML=STEPS.map((st,i)=>`<li class="${S.steps[i]?'done':''}"><label><input type="checkbox" data-i="${i}" ${S.steps[i]?'checked':''}> ${i+1}. ${st[0]}</label><p>${st[1]}</p></li>`).join('');
+  $('steps').querySelectorAll('input').forEach(c=>c.onchange=()=>{S.steps[c.dataset.i]=c.checked;save();renderSettings()});
+  const cb=$('copyorig');if(cb)cb.onclick=()=>navigator.clipboard.writeText(ORIGIN);
+  const ready=!!S.cid&&!onFile;
+  $('badge').className='badge '+(ready?'ok':'no');
+  $('badge').textContent=ready?'Setup complete':'Setup needed';
+  $('setupmsg').textContent=ready?'Signed-in access is saved. Just press Create.':'Finish the one-time setup in Settings first.';
+}
+function getToken(cb,err){
+  try{const t=JSON.parse(localStorage.getItem('quiztok')||'null');if(t&&t.exp>Date.now()+60000)return cb(t.v)}catch(e){}
+  if(!S.cid)return err('Add your Client ID in Settings first.');
+  if(onFile)return err('Open this tool from http://localhost, not as a file.');
+  if(!window.google?.accounts)return err('Google sign-in did not load. Check your internet connection.');
+  google.accounts.oauth2.initTokenClient({client_id:S.cid,scope:'https://www.googleapis.com/auth/forms.body',prompt:'',
+    callback:r=>{if(r.error)return err(r.error_description||r.error);
+      try{localStorage.setItem('quiztok',JSON.stringify({v:r.access_token,exp:Date.now()+(+r.expires_in||3600)*1000}))}catch(e){}
+      cb(r.access_token)}}).requestAccessToken();
+}
+const SAMPLE=`Title: General Knowledge Test
+Description: Choose the best answer.
+Default marks 1
+
+SECTION: Geography
+
+1. What is the capital of France?
+A. Berlin
+B. Paris
+C. Madrid
+D. Rome
+
+Answer: B
+Explanation: Paris has been the capital of France for centuries.
+
+2. Which of these is an ocean?
+A. Sahara
+B. Pacific
+C. Alps
+D. Gobi
+Answer: B
+Marks: 2
+Explanation: Sahara and Gobi are deserts and the Alps are mountains.
+
+SECTION: Science
+
+3. What is H2O commonly called?
+A. Salt
+B. Oxygen
+C. Water
+D. Hydrogen
+Answer: C
+Explanation: Two hydrogen atoms and one oxygen atom make water.`;
+
+let quiz=null;
+
+function parse(text){
+  const q={title:'Untitled Quiz',desc:'',marks:+S.defMarks||1,items:[]};
+  let cur=null,field=null,sec=null;
+  const push=()=>{if(cur){q.items.push(cur);cur=null}};
+  const lines=text.replace(/\r/g,'').split('\n');
+  for(const raw of lines){
+    const l=raw.trim();
+    let m;
+    if(!l){field=field==='q'?'q':null;continue}
+    if(m=l.match(/^title\s*:\s*(.*)$/i)){q.title=m[1]||q.title;field=null;continue}
+    if(m=l.match(/^description\s*:\s*(.*)$/i)){q.desc=m[1];field='desc';continue}
+    if(m=l.match(/^default\s+marks?\s*[:=]?\s*(\d+(?:\.\d+)?)/i)){q.marks=+m[1];field=null;continue}
+    if(m=l.match(/^section\s*:\s*(.*)$/i)){push();q.items.push({type:'section',name:m[1]||'Section'});field=null;continue}
+    if(m=l.match(/^(?:q(?:uestion)?\s*)?(\d+)\s*[.)]\s*(.*)$/i)){push();cur={type:'q',no:+m[1],text:m[2],opts:[],ans:[],marks:null,exp:'',warn:[]};field='q';continue}
+    if(!cur){if(field==='desc')q.desc+='\n'+l;continue}
+    if(m=l.match(/^answers?\s*[:=]\s*(.*)$/i)){cur.ans=(m[1].match(/[A-Ha-h]/g)||[]).map(x=>x.toUpperCase());field='ans';continue}
+    if(m=l.match(/^(?:explanation|explaination|explain|exp)\s*[:=]\s*(.*)$/i)){cur.exp=m[1];field='exp';continue}
+    if(m=l.match(/^(?:marks?|points?)\s*[:=]\s*(\d+(?:\.\d+)?)/i)){cur.marks=+m[1];field=null;continue}
+    if(m=l.match(/^\(?([A-Ha-h])[.)]\s*(.*)$/)){cur.opts.push({k:m[1].toUpperCase(),t:m[2]});field='opt';continue}
+    if(field==='q')cur.text+='\n'+l;
+    else if(field==='exp')cur.exp+='\n'+l;
+    else if(field==='opt'&&cur.opts.length)cur.opts[cur.opts.length-1].t+=' '+l;
+  }
+  push();
+  q.items.filter(i=>i.type==='q').forEach(i=>{
+    const keys=i.opts.map(o=>o.k);
+    if(!i.text.trim())i.warn.push('Question text is empty');
+    if(i.opts.length<2)i.warn.push('Needs at least 2 options');
+    if(!i.ans.length)i.warn.push('No answer given');
+    else if(i.ans.some(a=>!keys.includes(a)))i.warn.push('Answer is not one of the options');
+    if(i.ans.length>1)i.warn.push('Only one correct answer is allowed');
+    i.multi=false;
+    i.pts=i.marks??q.marks;
+  });
+  return q;
+}
+
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function render(){
+  const text=$('src').value;
+  try{localStorage.setItem('quizsrc',text)}catch(e){}
+  quiz=parse(text);
+  const qs=quiz.items.filter(i=>i.type==='q');
+  const total=qs.reduce((a,i)=>a+i.pts,0);
+  const secs=quiz.items.filter(i=>i.type==='section').length;
+  const bad=qs.filter(i=>i.warn.length);
+  $('stats').innerHTML=`<div>${esc(quiz.title)}</div><div>${qs.length} <span>questions</span></div><div>${total} <span>total marks</span></div>${secs?`<div>${secs} <span>sections</span></div>`:''}`;
+  $('warns').innerHTML=bad.length?`<div class="warnbox">${bad.length} question(s) need fixing: ${bad.map(b=>'Q'+b.no).join(', ')}</div>`:'';
+  let h='';
+  if(!qs.length)h='<div class="empty">Your preview appears here.</div>';
+  quiz.items.forEach(i=>{
+    if(i.type==='section'){h+=`<div class="sec">${esc(i.name)}</div>`;return}
+    h+=`<div class="q ${i.warn.length?'warn':''}"><span class="pts">${i.pts} mark${i.pts==1?'':'s'}</span><h3><span class="n">${i.no}.</span>${esc(i.text)}</h3>`;
+    i.opts.forEach(o=>h+=`<div class="opt ${i.ans.includes(o.k)?'c':''}"><b>${o.k}</b><span>${esc(o.t)}</span></div>`);
+    if(i.exp)h+=`<div class="exp">Explanation: ${esc(i.exp)}</div>`;
+    i.warn.forEach(w=>h+=`<div class="w">⚠ ${w}</div>`);
+    h+='</div>';
+  });
+  $('preview').innerHTML=h;
+  gate();
+}
+function gate(){
+  const qs=quiz.items.filter(i=>i.type==='q');
+  const ready=$('ok').checked&&qs.length&&!qs.some(i=>i.warn.length);
+  ['gen','make'].forEach(id=>$(id).disabled=!ready);
+}
+
+/* ---------- Apps Script path ---------- */
+function payload(){
+  return {title:quiz.title,desc:quiz.desc,items:quiz.items.map(i=>i.type==='section'?{s:i.name}:
+    {q:i.text,o:i.opts.map(o=>o.t),a:i.ans.map(a=>i.opts.findIndex(o=>o.k===a)),p:i.pts,e:i.exp})};
+}
+function buildScript(){
+  return `function createQuiz(){
+  var data=${JSON.stringify(payload(),null,1)};
+  var f=FormApp.create(data.title);
+  f.setIsQuiz(true);
+  if(data.desc)f.setDescription(data.desc);
+  data.items.forEach(function(it){
+    if(it.s){f.addPageBreakItem().setTitle(it.s);return;}
+    var item=f.addMultipleChoiceItem();
+    item.setTitle(it.q).setPoints(it.p).setRequired(${S.required});
+    item.setChoices(it.o.map(function(t,i){return item.createChoice(t,it.a.indexOf(i)>-1);}));
+    if(it.e)item.setFeedbackForCorrect(FormApp.createFeedback().setText(it.e).build())
+            .setFeedbackForIncorrect(FormApp.createFeedback().setText(it.e).build());
+  });
+  Logger.log('Share this link: '+f.getPublishedUrl());
+  Logger.log('Edit link: '+f.getEditUrl());
+}`;
+}
+
+/* ---------- Direct API path ---------- */
+async function api(token,url,body){
+  const r=await fetch(url,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const j=await r.json();if(!r.ok)throw new Error(j.error?.message||'Request failed');return j;
+}
+function createDirect(){
+  const out=m=>$('result').innerHTML=m;
+  const fail=m=>{out(`<div class="warnbox">${esc(m)}</div>`);$('settings').hidden=false};
+  out('<p class="hint">Signing in…</p>');
+  getToken(async tok=>{
+    out('<p class="hint">Creating form…</p>');
+    try{
+      const f=await api(tok,'https://forms.googleapis.com/v1/forms',{info:{title:quiz.title,documentTitle:quiz.title}});
+      const reqs=[{updateSettings:{settings:{quizSettings:{isQuiz:true}},updateMask:'quizSettings.isQuiz'}}];
+      if(quiz.desc)reqs.push({updateFormInfo:{info:{description:quiz.desc},updateMask:'description'}});
+      let idx=0;
+      quiz.items.forEach(i=>{
+        let item;
+        if(i.type==='section')item={title:i.name,pageBreakItem:{}};
+        else{
+          const fb=i.exp?{text:i.exp}:undefined;
+          item={title:i.text,questionItem:{question:{required:S.required,
+            grading:{pointValue:i.pts,correctAnswers:{answers:i.ans.map(a=>({value:i.opts.find(o=>o.k===a).t}))},...(fb?{whenRight:fb,whenWrong:fb}:{})},
+            choiceQuestion:{type:'RADIO',shuffle:S.shuffle,options:i.opts.map(o=>({value:o.t}))}}}};
+        }
+        reqs.push({createItem:{item,location:{index:idx++}}});
+      });
+      await api(tok,`https://forms.googleapis.com/v1/forms/${f.formId}:batchUpdate`,{requests:reqs});
+      const link=f.responderUri||`https://docs.google.com/forms/d/${f.formId}/viewform`;
+      out(`<div class="link"><b>Form created.</b><br>Share: <a href="${link}" target="_blank" rel="noopener">${link}</a><br>Edit: <a href="https://docs.google.com/forms/d/${f.formId}/edit" target="_blank" rel="noopener">open editor</a></div>`);
+    }catch(e){
+      if(/credential|expired|401/i.test(e.message)){try{localStorage.removeItem('quiztok')}catch(_){}}
+      fail(e.message);
+    }
+  },fail);
+}
+
+/* ---------- wiring ---------- */
+$('src').addEventListener('input',render);
+$('ok').addEventListener('change',gate);
+$('sample').onclick=()=>{$('src').value=SAMPLE;render()};
+$('clear').onclick=()=>{$('src').value='';$('ok').checked=false;$('js').hidden=true;render()};
+$('copyfmt').onclick=()=>navigator.clipboard.writeText($('guide').textContent);
+$('gen').onclick=()=>{$('js').textContent=buildScript();$('js').hidden=false;$('copyjs').disabled=false};
+$('copyjs').onclick=async()=>{await navigator.clipboard.writeText($('js').textContent);$('copyjs').textContent='Copied'; setTimeout(()=>$('copyjs').textContent='Copy script',1500)};
+$('make').onclick=createDirect;
+$('t1').onclick=()=>{$('p1').hidden=false;$('p2').hidden=true;$('t1').className='on';$('t2').className=''};
+$('t2').onclick=()=>{$('p1').hidden=true;$('p2').hidden=false;$('t2').className='on';$('t1').className=''};
+let saved='';try{saved=localStorage.getItem('quizsrc')||''}catch(e){}
+$('src').value=saved||SAMPLE;
+$('gear').onclick=()=>{$('settings').hidden=!$('settings').hidden};
+$('cid').oninput=()=>{S.cid=$('cid').value.trim();save();renderSettings()};
+$('dm').onchange=()=>{S.defMarks=+$('dm').value||1;save();render()};
+$('req').onchange=()=>{S.required=$('req').checked;save()};
+$('shuf').onchange=()=>{S.shuffle=$('shuf').checked;save()};
+$('reset').onclick=()=>{if(confirm('Clear Client ID and all saved settings?')){try{localStorage.removeItem('quizset');localStorage.removeItem('quiztok')}catch(e){}S={...DEF,steps:{}};renderSettings();render()}};
+$('test').onclick=()=>{$('testmsg').textContent='Opening Google sign-in…';
+  getToken(()=>{S.steps[5]=true;save();renderSettings();$('testmsg').textContent='Connected. Setup is complete.'},m=>$('testmsg').textContent=m)};
+const setView=v=>{document.body.dataset.view=v;$('vedit').className=v==='edit'?'on':'';$('vprev').className=v==='prev'?'on':'';window.scrollTo(0,0)};
+$('vedit').onclick=()=>setView('edit');$('vprev').onclick=()=>setView('prev');
+document.body.dataset.view='edit';
+renderSettings();
+if(!S.cid||onFile)$('settings').hidden=false;
+render();
+</script>
+</body>
+</html>
