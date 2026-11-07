@@ -208,7 +208,8 @@ Explanation: Why B is right</pre>
       <div class="fld"><label for="dm">Default marks (used when your text has no "Default marks" line)</label>
         <input type="number" id="dm" min="0" step="0.5"></div>
       <div class="fld"><label class="chk"><input type="checkbox" id="req"> Make every question required</label></div>
-      <div class="fld"><label class="chk"><input type="checkbox" id="shuf"> Shuffle options in Google Form</label></div>
+      <div class="fld"><label class="chk"><input type="checkbox" id="lab"> Number questions (1.) and label options (A.) in the form</label></div>
+      <div class="fld"><label class="chk"><input type="checkbox" id="shuf"> Shuffle options in Google Form</label><p class="hint" style="margin:4px 0 0">Ignored while numbering/labels are on, so A B C D stay in order.</p></div>
       <div class="fld"><label for="em">Collect respondents' email</label>
         <select id="em"><option value="none">Don't collect</option><option value="RESPONDER_INPUT">Ask them to type it</option><option value="VERIFIED">Verified Google account (sign-in required)</option></select>
         <p class="hint" style="margin:4px 0 0">"One response per person" can't be set from here; turn it on in the Google editor under Settings.</p></div>
@@ -289,7 +290,7 @@ Explanation: Why B is right</pre>
       <label class="chk"><input type="checkbox" id="pv-exp"> Explanations</label>
       <label class="chk"><input type="checkbox" id="pv-marks"> Marks</label>
       <label class="chk"><input type="checkbox" id="pv-name"> Name line</label>
-      <label id="pv-srcw" hidden>Data from <select id="pv-src"><option value="google">Google form (live, with images)</option><option value="text">Saved text</option></select></label>
+      <label id="pv-srcw" hidden>Data from <select id="pv-src"><option value="google">Google form (live, with images)</option><option value="text">Text only (no images)</option></select></label>
     </div>
     <div class="pvrow"><button class="pri" id="pv-print">Print / Save as PDF</button><button id="pv-close">Close</button></div>
     <div class="hint" id="pv-msg"></div>
@@ -301,7 +302,7 @@ Explanation: Why B is right</pre>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 const $=id=>document.getElementById(id);
-const DEF={cid:'',defMarks:1,required:true,shuffle:false,nameField:true,nameLabel:'Name',email:'none',steps:{}};
+const DEF={cid:'',defMarks:1,required:true,shuffle:false,nameField:true,nameLabel:'Name',email:'none',labels:true,steps:{}};
 let S;try{S={...DEF,...JSON.parse(localStorage.getItem('quizset')||'{}')}}catch(e){S={...DEF}}
 const save=()=>{try{localStorage.setItem('quizset',JSON.stringify(S))}catch(e){}};
 const ORIGIN=location.origin;const onFile=location.protocol==='file:';
@@ -314,7 +315,7 @@ const STEPS=[
  ['Test sign-in','Press Test Google sign-in. Approve once. Done, you never repeat this.']
 ];
 function renderSettings(){
-  $('cid').value=S.cid;$('dm').value=S.defMarks;$('req').checked=S.required;$('shuf').checked=S.shuffle;$('namef').checked=S.nameField;$('em').value=S.email||'none';$('namel').value=S.nameLabel;
+  $('cid').value=S.cid;$('dm').value=S.defMarks;$('req').checked=S.required;$('shuf').checked=S.shuffle;$('lab').checked=S.labels!==false;$('namef').checked=S.nameField;$('em').value=S.email||'none';$('namel').value=S.nameLabel;
   $('originwarn').innerHTML=onFile?'<div class="warnbox">You opened this as a file (file://). Google blocks sign-in from here. In the folder with this file run <code>python3 -m http.server 8000</code>, then open <code>http://localhost:8000/quiz-to-google-form.html</code> and use that same address from now on.</div>':'';
   $('steps').innerHTML=STEPS.map((st,i)=>`<li class="${S.steps[i]?'done':''}"><label><input type="checkbox" data-i="${i}" ${S.steps[i]?'checked':''}> ${i+1}. ${st[0]}</label><p>${st[1]}</p></li>`).join('');
   $('steps').querySelectorAll('input').forEach(c=>c.onchange=()=>{S.steps[c.dataset.i]=c.checked;save();renderSettings()});
@@ -587,7 +588,7 @@ function gate(){
 
 /* ---------- Apps Script path ---------- */
 function payload(){
-  return {title:quiz.title,desc:quiz.desc,name:S.nameField?(S.nameLabel||'Name'):'',email:!!(S.email&&S.email!=='none'),items:quiz.items.map(i=>i.type==='section'?{s:i.name}:
+  return {title:quiz.title,desc:quiz.desc,name:S.nameField?(S.nameLabel||'Name'):'',email:!!(S.email&&S.email!=='none'),labels:S.labels!==false,items:quiz.items.map(i=>i.type==='section'?{s:i.name}:
     {q:i.text,o:i.opts.map(o=>o.t),a:i.ans.map(a=>i.opts.findIndex(o=>o.k===a)),p:i.pts,e:i.exp})};
 }
 function buildScript(){
@@ -598,11 +599,13 @@ function buildScript(){
   if(data.desc)f.setDescription(data.desc);
   if(data.email)f.setCollectEmail(true);
   if(data.name)f.addTextItem().setTitle(data.name).setRequired(true);
+  var qn=0;
   data.items.forEach(function(it,n){
     if(it.s){if(n===0&&!data.name)f.addSectionHeaderItem().setTitle(it.s);else f.addPageBreakItem().setTitle(it.s);return;}
     var item=f.addMultipleChoiceItem();
-    item.setTitle(it.q).setPoints(it.p).setRequired(${S.required});
-    item.setChoices(it.o.map(function(t,i){return item.createChoice(t,it.a.indexOf(i)>-1);}));
+    qn++;
+    item.setTitle(data.labels?qn+'. '+it.q:it.q).setPoints(it.p).setRequired(${S.required});
+    item.setChoices(it.o.map(function(t,i){return item.createChoice(data.labels?String.fromCharCode(65+i)+'. '+t:t,it.a.indexOf(i)>-1);}));
     if(it.e)item.setFeedbackForCorrect(FormApp.createFeedback().setText(it.e).build())
             .setFeedbackForIncorrect(FormApp.createFeedback().setText(it.e).build());
   });
@@ -619,14 +622,17 @@ async function api(token,url,body){
 function buildItems(){
   const items=[];
   if(S.nameField)items.push({title:S.nameLabel||'Name',questionItem:{question:{required:true,textQuestion:{paragraph:false}}}});
+  const lab=S.labels!==false;let qn=0;
   quiz.items.forEach((i,n)=>{
     if(i.type==='section'){
       items.push(n===0&&!S.nameField?{title:i.name,textItem:{}}:{title:i.name,pageBreakItem:{}});return;
     }
+    qn++;
     const fb=i.exp?{text:i.exp}:undefined;
-    const it={title:i.text,questionItem:{question:{required:S.required,
-      grading:{pointValue:i.pts,correctAnswers:{answers:i.ans.map(a=>({value:i.opts.find(o=>o.k===a).t}))},...(fb?{whenRight:fb,whenWrong:fb}:{})},
-      choiceQuestion:{type:'RADIO',shuffle:S.shuffle,options:i.opts.map(o=>({value:o.t}))}}}};
+    const ov=i.opts.map((o,k)=>lab?letter(k)+'. '+o.t:o.t);
+    const it={title:lab?qn+'. '+i.text:i.text,questionItem:{question:{required:S.required,
+      grading:{pointValue:i.pts,correctAnswers:{answers:i.ans.map(a=>({value:ov[i.opts.findIndex(o=>o.k===a)]}))},...(fb?{whenRight:fb,whenWrong:fb}:{})},
+      choiceQuestion:{type:'RADIO',shuffle:lab?false:S.shuffle,options:ov.map(v=>({value:v}))}}}};
     items.push(it);
   });
   return items;
@@ -652,6 +658,7 @@ function createDirect(){
       let id=updating,link,reqs=[];
       if(updating){
         const cur=await api(tok,`https://forms.googleapis.com/v1/forms/${updating}`);
+        if((cur.items||[]).some(x=>(x.questionItem&&x.questionItem.image)||x.imageItem)&&!confirm('This form has images added in Google. Updating replaces all questions and REMOVES those images. Continue?')){out('');return}
         for(let k=0;k<(cur.items||[]).length;k++)reqs.push({deleteItem:{location:{index:0}}});
         link=cur.responderUri;
         reqs.push({updateFormInfo:{info:{title:quiz.title,description:quiz.desc||''},updateMask:'title,description'}});
@@ -709,14 +716,16 @@ function renderForms(){
 }
 
 /* ---------- print ---------- */
-const PRD={form:null,data:null};
+const PRD={form:null,data:null,ed:false};
 function printOpts(){S.print={layout:'each',marks:true,name:true,exp:true,...(S.print||{})};return S.print}
 function fromParsed(q){
   return {title:q.title==='Untitled Quiz'?'':q.title,desc:q.desc||'',items:q.items.map(i=>i.type==='section'?{type:'section',name:i.name}:
     {type:'q',text:i.text,opts:i.opts.map(o=>({t:o.t})),ans:i.opts.findIndex(o=>i.ans.includes(o.k)),exp:i.exp||'',pts:i.pts})};
 }
 function fromGoogle(f){
-  const items=[],img=x=>x?(x.contentUri||x.sourceUri||''):'';
+  const items=[];let nimg=0;
+  const img=x=>{if(!x)return '';const u=x.contentUri||x.sourceUri||Object.values(x).find(v=>typeof v==='string'&&/^https?:/.test(v))||'';if(u)nimg++;return u};
+  const sn=t=>t.replace(/^\s*\d+\s*[.)]\s+/,''),sl=t=>t.replace(/^\s*[A-Ha-h]\s*[.)]\s+/,'');
   (f.items||[]).forEach(it=>{
     const t=(it.title||'').trim();
     if(it.pageBreakItem||it.textItem){if(t)items.push({type:'section',name:t});return}
@@ -724,16 +733,22 @@ function fromGoogle(f){
     const qi=it.questionItem;if(!qi||!qi.question)return;
     const q=qi.question,g=q.grading||{};
     if(q.choiceQuestion){
-      const opts=(q.choiceQuestion.options||[]).map(o=>({t:o.value||'',img:img(o.image)}));
+      const raw=(q.choiceQuestion.options||[]).map(o=>({t:o.value||'',img:img(o.image)}));
       const cor=((g.correctAnswers||{}).answers||[])[0];
-      items.push({type:'q',text:t,img:img(qi.image),opts,ans:cor?opts.findIndex(o=>o.t===cor.value):-1,exp:(g.whenRight&&g.whenRight.text)||(g.generalFeedback&&g.generalFeedback.text)||'',pts:g.pointValue??0});
+      items.push({type:'q',text:sn(t),img:img(qi.image),opts:raw.map(o=>({t:sl(o.t),img:o.img})),ans:cor?raw.findIndex(o=>o.t===cor.value):-1,exp:(g.whenRight&&g.whenRight.text)||(g.generalFeedback&&g.generalFeedback.text)||'',pts:g.pointValue??0});
     }else if(q.textQuestion){
       const low=t.toLowerCase();
       if(low===(S.nameLabel||'name').toLowerCase()||/^(name|e-?mail)\b/.test(low))return;
-      items.push({type:'q',text:t,img:img(qi.image),opts:[],ans:-1,exp:'',pts:g.pointValue??0});
+      items.push({type:'q',text:sn(t),img:img(qi.image),opts:[],ans:-1,exp:'',pts:g.pointValue??0});
     }
   });
-  return {title:(f.info&&f.info.title)||'',desc:(f.info&&f.info.description)||'',items};
+  return {title:(f.info&&f.info.title)||'',desc:(f.info&&f.info.description)||'',items,nimg};
+}
+function imgFail(el){
+  const m=document.createElement('div');m.className='aline';m.style.cssText='font:italic 12px sans-serif;color:#b00;border:0;height:auto';
+  m.textContent='[An image could not be loaded. Try Print again, or open the form in Google to check it.]';
+  el.replaceWith(m);
+  const n=$('pv-msg');if(n&&!/could not be loaded/.test(n.textContent))n.textContent+=' Some images could not be loaded.';
 }
 function sheetHTML(d,o){
   const qs=d.items.filter(i=>i.type==='q'),total=qs.reduce((a,i)=>a+(+i.pts||0),0);
@@ -743,15 +758,15 @@ function sheetHTML(d,o){
   let n=0;const key=[];
   d.items.forEach(i=>{
     if(i.type==='section'){h+=`<h2>${esc(i.name)}</h2>`;return}
-    if(i.type==='image'){h+=`<img class="pi" src="${esc(i.src)}" alt="">`;return}
+    if(i.type==='image'){h+=`<img class="pi" src="${esc(i.src)}" alt="" referrerpolicy="no-referrer" onerror="imgFail(this)">`;return}
     n++;
     const L=i.ans>=0?letter(i.ans):'',at=i.ans>=0&&i.opts[i.ans]?i.opts[i.ans].t:'';
     key.push({n,L,at,exp:i.exp});
     h+=`<div class="pq"><div class="pqt">${o.marks?`<span class="pm">[${i.pts}]</span>`:''}<b>${n}.</b> ${esc(i.text)}</div>`;
-    if(i.img)h+=`<img class="pi" src="${esc(i.img)}" alt="">`;
+    if(i.img)h+=`<img class="pi" src="${esc(i.img)}" alt="" referrerpolicy="no-referrer" onerror="imgFail(this)">`;
     if(i.opts.length){
       const row=i.opts.length<=4&&i.opts.every(p=>!p.img&&p.t.length<=16);
-      h+=`<div class="po${row?' row':''}">`+i.opts.map((p,k)=>`<div><b>${letter(k)}.</b> ${p.img?`<img class="pi s" src="${esc(p.img)}" alt="">`:''}${esc(p.t)}</div>`).join('')+'</div>';
+      h+=`<div class="po${row?' row':''}">`+i.opts.map((p,k)=>`<div><b>${letter(k)}.</b> ${p.img?`<img class="pi s" src="${esc(p.img)}" alt="" referrerpolicy="no-referrer" onerror="imgFail(this)">`:''}${esc(p.t)}</div>`).join('')+'</div>';
     }else h+='<div class="aline"></div>';
     if(o.layout==='each'){
       h+=`<div class="pa"><b>Answer:</b> ${L?L+'. '+esc(at):'—'}`;
@@ -770,7 +785,7 @@ function sheetHTML(d,o){
 const drawSheet=()=>{$('sheet').innerHTML=sheetHTML(PRD.data,printOpts())};
 function useText(){
   const f=PRD.form?loadForms().find(x=>x.id===PRD.form):null;
-  PRD.data=fromParsed(parse(f?(f.text||''):$('src').value));
+  PRD.data=fromParsed(parse(PRD.ed||!f?$('src').value:(f.text||'')));
 }
 async function loadPrintData(){
   const msg=$('pv-msg');msg.textContent='';
@@ -780,7 +795,7 @@ async function loadPrintData(){
       PRD.data=await new Promise((res,rej)=>getToken(async tok=>{
         try{res(fromGoogle(await api(tok,'https://forms.googleapis.com/v1/forms/'+PRD.form)))}catch(e){rej(e)}
       },m=>rej(new Error(m))));
-      msg.textContent='Loaded live from Google, including images and edits made there. Name and email fields are skipped.';
+      msg.textContent='Loaded live from Google. '+(PRD.data.nimg?PRD.data.nimg+' image(s) found.':'No images found in this form.')+' Name and email fields are skipped.';
     }catch(e){
       msg.textContent='Could not load from Google ('+e.message+'). Showing the saved text instead.';
       $('pv-src').value='text';useText();
@@ -788,8 +803,8 @@ async function loadPrintData(){
   }else{useText();if(!PRD.data.items.some(i=>i.type==='q'))msg.textContent='No questions to print yet.'}
   drawSheet();
 }
-function openPrint(formId){
-  PRD.form=formId||null;
+function openPrint(formId,fromEditor){
+  PRD.form=formId||null;PRD.ed=!!fromEditor;
   const o=printOpts();
   $('pv-lay').value=o.layout;$('pv-exp').checked=o.exp;$('pv-marks').checked=o.marks;$('pv-name').checked=o.name;
   $('pv-srcw').hidden=!formId;$('pv-src').value=formId?'google':'text';
@@ -852,7 +867,7 @@ ${text.trim()}
 }
 document.addEventListener('click',async e=>{
   if(e.target.closest('.cptext')){const t=$('src').value;if(!t.trim())return say('Nothing to copy yet.');say(await copy(t)?'All text copied.':'Copy failed. Select the text and copy manually.');return}
-  if(e.target.closest('.prt')){if(!$('src').value.trim())return say('Add your exam text first.');openPrint(null);return}
+  if(e.target.closest('.prt')){if(!$('src').value.trim())return say('Add your exam text first.');openPrint(editingId,true);return}
   if(e.target.closest('.cpfmt')){say(await copy($('guide').textContent)?'Format guide copied.':'Copy failed.');return}
   if(e.target.closest('.rvw')){
     const t=$('src').value;if(!t.trim())return say('Add your exam text first.');
@@ -918,6 +933,7 @@ $('cid').oninput=()=>{S.cid=$('cid').value.trim();save();renderSettings()};
 $('dm').onchange=()=>{S.defMarks=+$('dm').value||1;save();render()};
 $('req').onchange=()=>{S.required=$('req').checked;save()};
 $('shuf').onchange=()=>{S.shuffle=$('shuf').checked;save()};
+$('lab').onchange=()=>{S.labels=$('lab').checked;save()};
 $('em').onchange=()=>{S.email=$('em').value;save()};
 $('namef').onchange=()=>{S.nameField=$('namef').checked;save();render()};
 $('namel').oninput=()=>{S.nameLabel=$('namel').value||'Name';save();render()};
