@@ -46,7 +46,7 @@ pre{background:#14122a;color:#e7e4ff;border-radius:10px;padding:12px;max-height:
 details{margin-top:10px}
 label.chk{display:flex;gap:8px;align-items:center;font-weight:600}
 header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
-.badge{display:inline-block;padding:4px 10px;border-radius:99px;font-size:13px;font-weight:600;margin-right:8px}
+.badge{cursor:pointer;display:inline-block;padding:4px 10px;border-radius:99px;font-size:13px;font-weight:600;margin-right:8px}
 .badge.ok{background:var(--okbg);color:#12633d}.badge.no{background:var(--badbg);color:var(--bad)}
 #settings{margin:0 24px 4px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -86,6 +86,74 @@ body{overflow-wrap:anywhere;padding-bottom:env(safe-area-inset-bottom,0)}
   body[data-view=prev] #edit{display:none}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+.qi{max-width:100%;max-height:260px;border-radius:8px;margin:4px 0 8px;display:block}
+.fcard{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:#fff}
+.fcard h3{margin:0 0 2px;font-size:16px}
+.fcard .row button{flex:0 1 auto;padding:7px 12px;min-height:38px;font-size:14px}
+.editbar:empty{display:none!important}
+.editbar{background:#ece8fb;border:1px solid var(--acc);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+#forms{grid-column:1/-1}
+.namecard{border-style:dashed;color:var(--mute)}
+@media(max-width:860px){
+  body[data-view=edit] #forms,body[data-view=prev] #forms{display:none}
+  body[data-view=forms] #edit,body[data-view=forms] #prev{display:none}
+  .fcard .row button{flex:1 1 45%}
+}
+
+.etools{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.etools .sp{flex:1}
+.ic{padding:6px 12px;min-height:40px;font-size:15px;line-height:1}
+.ptools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ptools button{padding:6px 12px;min-height:40px}
+.qh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px}
+.qh .pts{float:none;margin:0}
+.tb{display:flex;gap:4px}
+.tb button{padding:2px 9px;min-height:32px;font-size:15px;line-height:1}
+.sec{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.q textarea{height:auto;min-height:64px;font:inherit;font-size:16px;background:#fff}
+.editing{border-color:var(--acc);box-shadow:0 0 0 2px #5b3fd02a}
+.eopt{display:flex;gap:6px;align-items:center;margin:6px 0}
+.eopt input[type=radio]{width:20px;height:20px;flex:none;accent-color:var(--ok)}
+.eopt .e-o{flex:1}
+.note{background:#fff6e0;color:#8a5a00;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:14px}
+.etools{flex-wrap:wrap}
+select{font:inherit;font-size:16px;border:1px solid var(--line);border-radius:8px;padding:10px;width:100%;background:#fff;color:var(--ink)}
+
+#pv{position:fixed;inset:0;z-index:60;background:#e9e8f2;overflow:auto}
+#pv[hidden]{display:none}
+.pvbar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:10px 14px;z-index:2}
+.pvrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.pvrow select{width:auto;padding:8px;font-size:15px}
+.sheet{background:#fff;max-width:820px;margin:12px auto 40px;padding:28px;font:14px/1.5 Georgia,"Times New Roman",serif;color:#000;box-shadow:0 2px 12px #0002}
+.sheet h1{margin:0 0 2px;font:700 22px/1.25 Georgia,"Times New Roman",serif}
+.sheet .pdesc{font-size:11.5px;font-weight:300;color:#555;margin-bottom:10px;white-space:pre-wrap}
+.sheet .pname{display:flex;gap:10px;align-items:flex-end;margin:10px 0 14px;font-size:13px}
+.sheet .pname .ln{flex:1;border-bottom:1px solid #000;min-width:60px;height:14px}
+.sheet .pname .ln.sm{flex:.5}
+.sheet h2{font:700 15px Georgia,serif;margin:16px 0 8px;border-bottom:1.5px solid #000;padding-bottom:3px}
+.sheet h2.pb{break-before:page}
+.pq{margin:0 0 14px;break-inside:avoid}
+.pqt{white-space:pre-wrap}
+.pm{float:right;font-size:12px;margin-left:8px}
+.po{margin:4px 0 0 18px}
+.po>div{margin:2px 0}
+.po.row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px 12px}
+.pa{margin:5px 0 0 18px;font-size:13px}
+.pa .px{font-size:12.5px;color:#222}
+.pi{max-width:60%;max-height:230px;display:block;margin:6px 0 6px 18px}
+.pi.s{max-height:80px;display:inline-block;margin:0 6px 0 0;vertical-align:middle}
+.aline{margin:14px 0 0 18px;border-bottom:1px solid #777;height:18px}
+.pkey{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:6px}
+.pe{margin:0 0 10px;break-inside:avoid}
+@media(max-width:860px){.sheet{padding:16px;margin:8px}}
+@media print{
+  body>*:not(#pv){display:none!important}
+  #pv{position:static!important;background:#fff!important;overflow:visible!important}
+  .pvbar{display:none!important}
+  .sheet{box-shadow:none!important;margin:0!important;padding:0!important;max-width:none!important}
+  @page{margin:14mm}
+}
 </style>
 </head>
 <body>
@@ -97,38 +165,25 @@ body{overflow-wrap:anywhere;padding-bottom:env(safe-area-inset-bottom,0)}
 <section id="settings" class="panel" hidden>
   <div class="grid2">
     <div>
-      <h2 style="margin:0 0 10px;font-size:18px">Setup guide (one time only)</h2>
       <div id="originwarn"></div>
-      <ol class="setup" id="steps"></ol>
-    </div>
-    <div>
-      <h2 style="margin:0 0 10px;font-size:18px">Saved settings</h2>
-      <div class="fld"><label for="cid">Google OAuth Client ID</label>
-        <input type="text" id="cid" placeholder="xxxx.apps.googleusercontent.com"></div>
-      <div class="fld"><label for="dm">Default marks (used when your text has no "Default marks" line)</label>
-        <input type="number" id="dm" min="0" step="0.5"></div>
-      <div class="fld"><label class="chk"><input type="checkbox" id="req"> Make every question required</label></div>
-      <div class="fld"><label class="chk"><input type="checkbox" id="shuf"> Shuffle options in Google Form</label></div>
+      <details id="stepsbox"><summary><b>Show setup steps</b> <span class="hint">(one time only, already done if you see "Setup complete")</span></summary>
+        <ol class="setup" id="steps" style="margin-top:10px"></ol>
+      </details>
+      <h2 style="margin:18px 0 6px;font-size:18px">Backup &amp; restore</h2>
+      <p class="hint">Saves your settings and forms list as a small file on your device. Use it before clearing browser data or when moving to a new phone.</p>
       <div class="row">
-        <button class="pri" id="test">Test Google sign-in</button>
-        <button id="reset">Reset all settings</button>
+        <button class="pri" id="bk">Download backup</button>
+        <button id="rs">Restore from file</button>
+        <input type="file" id="rsf" accept="application/json,.json" hidden>
       </div>
-      <p class="hint" id="testmsg"></p>
-      <p class="hint">Everything is saved in this browser for this address. Always open the tool from the same address, or the settings won't be found.</p>
-    </div>
-  </div>
-</section>
-<main>
-  <section class="panel" id="edit">
-    <textarea id="src" spellcheck="false" aria-label="Exam text"></textarea>
-    <div class="row">
-      <button id="sample">Load sample</button>
-      <button id="clear">Clear</button>
-      <button id="copyfmt">Copy format guide</button>
-    </div>
-    <details>
-      <summary>Format guide</summary>
-      <pre id="guide">Title: My Exam           (optional)
+      <p class="hint" id="bkmsg"></p>
+      <h2 style="margin:18px 0 6px;font-size:18px">Editor tools</h2>
+      <p class="hint">Rarely needed tools, kept here so a stray tap can't replace your exam text.</p>
+      <div class="row">
+        <button id="sample">Load sample</button>
+      </div>
+      <details style="margin-top:10px"><summary><b>Format guide</b></summary>
+        <pre id="guide">Title: My Exam           (optional)
 Description: Instructions  (optional)
 Default marks 1           (optional, default 1)
 
@@ -142,10 +197,61 @@ D. Option
 Answer: B                 (one correct option only)
 Marks: 2                  (optional, overrides default)
 Explanation: Why B is right</pre>
-    </details>
+        <div class="row"><button id="copyfmt">Copy format guide</button></div>
+      </details>
+      <p class="hint" id="toolmsg"></p>
+    </div>
+    <div>
+      <h2 style="margin:0 0 10px;font-size:18px">Saved settings</h2>
+      <div class="fld"><label for="cid">Google OAuth Client ID</label>
+        <input type="text" id="cid" placeholder="xxxx.apps.googleusercontent.com"></div>
+      <div class="fld"><label for="dm">Default marks (used when your text has no "Default marks" line)</label>
+        <input type="number" id="dm" min="0" step="0.5"></div>
+      <div class="fld"><label class="chk"><input type="checkbox" id="req"> Make every question required</label></div>
+      <div class="fld"><label class="chk"><input type="checkbox" id="shuf"> Shuffle options in Google Form</label></div>
+      <div class="fld"><label for="em">Collect respondents' email</label>
+        <select id="em"><option value="none">Don't collect</option><option value="RESPONDER_INPUT">Ask them to type it</option><option value="VERIFIED">Verified Google account (sign-in required)</option></select>
+        <p class="hint" style="margin:4px 0 0">"One response per person" can't be set from here; turn it on in the Google editor under Settings.</p></div>
+      <div class="fld"><label class="chk"><input type="checkbox" id="namef"> Add a Name field first (0 marks)</label>
+        <input type="text" id="namel" placeholder="Field label, e.g. Name" style="margin-top:6px"></div>
+      <div class="row">
+        <button class="pri" id="test">Test Google sign-in</button>
+        <button id="reset">Reset all settings</button>
+      </div>
+      <p class="hint" id="testmsg"></p>
+      <p class="hint">Everything is saved in this browser for this address. Always open the tool from the same address, or the settings won't be found.</p>
+    </div>
+  </div>
+</section>
+<main>
+  <section class="panel" id="edit">
+    <div id="editbar" class="editbar"></div>
+    <div class="etools">
+      <span class="hint">Exam text</span><span class="sp"></span>
+      <button class="ic undo" aria-label="Undo last change" title="Undo last change" disabled>&#8630;</button>
+      <button class="ic" id="fmt" aria-label="Auto-format" title="Auto-format messy text">&#10022;</button>
+      <button class="ic cptext" aria-label="Copy all text" title="Copy all text">&#128203;</button>
+      <button class="ic cpfmt" aria-label="Copy format guide" title="Copy format guide">&#9432;</button>
+      <button class="ic prt" aria-label="Print form" title="Print form">&#128424;</button>
+      <button class="ic rvw" aria-label="Review with ChatGPT" title="Review with ChatGPT">&#128269;</button>
+      <button class="ic" id="clr" aria-label="Clear all" title="Clear all">&#128465;</button>
+    </div>
+    <textarea id="src" spellcheck="false" aria-label="Exam text" placeholder="Paste or type your exam here.&#10;&#10;1. Question&#10;A. Option&#10;B. Option&#10;C. Option&#10;D. Option&#10;Answer: B&#10;Explanation: ...&#10;&#10;Not formatted? Paste it and tap Auto-format."></textarea>
+    <div class="hint" id="emsg" style="margin-top:6px"></div>
+
   </section>
 
   <section class="panel" id="prev">
+    <div class="ptools">
+      <button data-act="head">&#9998; Details</button>
+      <button data-act="addq">&#65291; Question</button>
+      <button data-act="addsec">&#65291; Section</button>
+      <button class="undo" aria-label="Undo last change" title="Undo last change" disabled>&#8630;</button>
+      <button class="cptext" aria-label="Copy all text" title="Copy all text">&#128203;</button>
+      <button class="prt" aria-label="Print form" title="Print form">&#128424;</button>
+      <button class="rvw" aria-label="Review with ChatGPT" title="Review with ChatGPT">&#128269;</button>
+    </div>
+    <div class="hint" id="pmsg" style="margin-bottom:8px"></div>
     <div class="stats" id="stats"></div>
     <div id="warns"></div>
     <div id="preview"></div>
@@ -170,13 +276,32 @@ Explanation: Why B is right</pre>
       <div id="result"></div>
     </div>
   </section>
+  <section class="panel" id="forms">
+    <h2 style="margin:0 0 10px;font-size:18px">My forms</h2>
+    <p class="hint">Forms created from this tool on this device.</p>
+    <div id="flist"></div>
+  </section>
 </main>
-<nav class="mtabs" aria-label="View"><button id="vedit" class="on">Edit text</button><button id="vprev">Preview &amp; create</button></nav>
+<div id="pv" hidden>
+  <div class="pvbar">
+    <div class="pvrow">
+      <label>Answers <select id="pv-lay"><option value="each">After each question</option><option value="end">At the end</option><option value="none">Hide answers</option></select></label>
+      <label class="chk"><input type="checkbox" id="pv-exp"> Explanations</label>
+      <label class="chk"><input type="checkbox" id="pv-marks"> Marks</label>
+      <label class="chk"><input type="checkbox" id="pv-name"> Name line</label>
+      <label id="pv-srcw" hidden>Data from <select id="pv-src"><option value="google">Google form (live, with images)</option><option value="text">Saved text</option></select></label>
+    </div>
+    <div class="pvrow"><button class="pri" id="pv-print">Print / Save as PDF</button><button id="pv-close">Close</button></div>
+    <div class="hint" id="pv-msg"></div>
+  </div>
+  <div class="sheet" id="sheet"></div>
+</div>
+<nav class="mtabs" aria-label="View"><button id="vedit" class="on">Edit text</button><button id="vprev">Preview &amp; create</button><button id="vforms">My forms</button></nav>
 
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 const $=id=>document.getElementById(id);
-const DEF={cid:'',defMarks:1,required:true,shuffle:false,steps:{}};
+const DEF={cid:'',defMarks:1,required:true,shuffle:false,nameField:true,nameLabel:'Name',email:'none',steps:{}};
 let S;try{S={...DEF,...JSON.parse(localStorage.getItem('quizset')||'{}')}}catch(e){S={...DEF}}
 const save=()=>{try{localStorage.setItem('quizset',JSON.stringify(S))}catch(e){}};
 const ORIGIN=location.origin;const onFile=location.protocol==='file:';
@@ -189,7 +314,7 @@ const STEPS=[
  ['Test sign-in','Press Test Google sign-in. Approve once. Done, you never repeat this.']
 ];
 function renderSettings(){
-  $('cid').value=S.cid;$('dm').value=S.defMarks;$('req').checked=S.required;$('shuf').checked=S.shuffle;
+  $('cid').value=S.cid;$('dm').value=S.defMarks;$('req').checked=S.required;$('shuf').checked=S.shuffle;$('namef').checked=S.nameField;$('em').value=S.email||'none';$('namel').value=S.nameLabel;
   $('originwarn').innerHTML=onFile?'<div class="warnbox">You opened this as a file (file://). Google blocks sign-in from here. In the folder with this file run <code>python3 -m http.server 8000</code>, then open <code>http://localhost:8000/quiz-to-google-form.html</code> and use that same address from now on.</div>':'';
   $('steps').innerHTML=STEPS.map((st,i)=>`<li class="${S.steps[i]?'done':''}"><label><input type="checkbox" data-i="${i}" ${S.steps[i]?'checked':''}> ${i+1}. ${st[0]}</label><p>${st[1]}</p></li>`).join('');
   $('steps').querySelectorAll('input').forEach(c=>c.onchange=()=>{S.steps[c.dataset.i]=c.checked;save();renderSettings()});
@@ -246,7 +371,7 @@ Explanation: Two hydrogen atoms and one oxygen atom make water.`;
 let quiz=null;
 
 function parse(text){
-  const q={title:'Untitled Quiz',desc:'',marks:+S.defMarks||1,items:[]};
+  const q={title:'Untitled Quiz',desc:'',marks:+S.defMarks||1,hasMarks:false,items:[]};
   let cur=null,field=null,sec=null;
   const push=()=>{if(cur){q.items.push(cur);cur=null}};
   const lines=text.replace(/\r/g,'').split('\n');
@@ -256,7 +381,7 @@ function parse(text){
     if(!l){field=field==='q'?'q':null;continue}
     if(m=l.match(/^title\s*:\s*(.*)$/i)){q.title=m[1]||q.title;field=null;continue}
     if(m=l.match(/^description\s*:\s*(.*)$/i)){q.desc=m[1];field='desc';continue}
-    if(m=l.match(/^default\s+marks?\s*[:=]?\s*(\d+(?:\.\d+)?)/i)){q.marks=+m[1];field=null;continue}
+    if(m=l.match(/^default\s+marks?\s*[:=]?\s*(\d+(?:\.\d+)?)/i)){q.marks=+m[1];q.hasMarks=true;field=null;continue}
     if(m=l.match(/^section\s*:\s*(.*)$/i)){push();q.items.push({type:'section',name:m[1]||'Section'});field=null;continue}
     if(m=l.match(/^(?:q(?:uestion)?\s*)?(\d+)\s*[.)]\s*(.*)$/i)){push();cur={type:'q',no:+m[1],text:m[2],opts:[],ans:[],marks:null,exp:'',warn:[]};field='q';continue}
     if(!cur){if(field==='desc')q.desc+='\n'+l;continue}
@@ -277,12 +402,128 @@ function parse(text){
     else if(i.ans.some(a=>!keys.includes(a)))i.warn.push('Answer is not one of the options');
     if(i.ans.length>1)i.warn.push('Only one correct answer is allowed');
     i.multi=false;
+    const ts=i.opts.map(o=>o.t.trim().toLowerCase());
+    if(ts.some(t=>!t))i.warn.push('An option is empty');
+    else if(new Set(ts).size<ts.length)i.warn.push('Two options are the same');
     i.pts=i.marks??q.marks;
   });
   return q;
 }
 
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let ED=null;
+const letter=k=>String.fromCharCode(65+k);
+const getPrev=()=>{try{return localStorage.getItem('quizprev')}catch(e){return null}};
+function updUndo(){const p=getPrev();document.querySelectorAll('.undo').forEach(b=>b.disabled=p===null)}
+function pushPrev(){try{localStorage.setItem('quizprev',$('src').value)}catch(e){}updUndo()}
+
+function toText(q){
+  let o='';
+  if(q.title&&q.title!=='Untitled Quiz')o+='Title: '+q.title+'\n';
+  if(q.desc)o+='Description: '+q.desc.replace(/\s*\n\s*/g,' ')+'\n';
+  if(q.hasMarks)o+='Default marks '+q.marks+'\n';
+  let n=0;
+  q.items.forEach(i=>{
+    if(i.type==='section'){o+='\nSECTION: '+i.name+'\n';return}
+    o+='\n'+(++n)+'. '+String(i.text).trim()+'\n';
+    i.opts.forEach((p,k)=>o+=letter(k)+'. '+String(p.t).trim()+'\n');
+    let an=(i.ans||[]).map(a=>i.opts.findIndex(p=>p.k===a)).filter(x=>x>-1).map(letter);
+    if(an.length)o+='Answer: '+an.join(', ')+'\n';
+    else if(i.rawAns)o+='Answer: '+i.rawAns+'\n';
+    if(i.marks!=null&&i.marks!=='')o+='Marks: '+i.marks+'\n';
+    if(i.exp&&String(i.exp).trim())o+='Explanation: '+String(i.exp).trim()+'\n';
+  });
+  return o.replace(/^\n+/,'').trimEnd()+'\n';
+}
+
+function autoFormat(text){
+  const q={title:'Untitled Quiz',desc:'',marks:1,hasMarks:false,items:[]};
+  let cur=null,field=null,blank=false,titled=false;
+  const resolve=c=>{
+    if(c.rawAns==null)return;
+    const r=c.rawAns.trim();
+    const m=r.match(/^\(?([A-Ha-h])\)?(?:[.\s:)\-]|$)/);
+    if(m&&c.opts.some(o=>o.k===m[1].toUpperCase()))c.ans=[m[1].toUpperCase()];
+    else{const f=c.opts.find(o=>o.t.trim().toLowerCase()===r.toLowerCase());if(f)c.ans=[f.k]}
+  };
+  const push=()=>{if(cur){resolve(cur);q.items.push(cur);cur=null}};
+  const newQ=t=>({type:'q',text:t,opts:[],ans:[],rawAns:null,marks:null,exp:''});
+  for(const raw of text.replace(/\r/g,'').split('\n')){
+    const l=raw.trim();let m;
+    if(!l){blank=true;continue}
+    const wasBlank=blank;blank=false;
+    if(m=l.match(/^title\s*[:=]\s*(.*)$/i)){q.title=m[1]||q.title;titled=true;continue}
+    if(m=l.match(/^description\s*[:=]\s*(.*)$/i)){q.desc=m[1];continue}
+    if(m=l.match(/^default\s+marks?\s*[:=]?\s*(\d+(?:\.\d+)?)/i)){q.marks=+m[1];q.hasMarks=true;continue}
+    if(m=l.match(/^section\s*[:\-–]\s*(.*)$/i)){push();q.items.push({type:'section',name:m[1]||'Section'});field=null;continue}
+    if(m=l.match(/^(?:q(?:uestion)?\.?\s*)?\(?(\d+)\s*[.):\-]\s*(.*)$/i)){push();cur=newQ(m[2]);field='q';continue}
+    if(cur){
+      if(m=l.match(/^(?:correct\s+)?(?:ans(?:wer)?|key)\b\s*[:=.\-)]*\s*(.*)$/i)){cur.rawAns=m[1];field='ans';continue}
+      if(m=l.match(/^(?:explanation|explaination|explain|exp|solution|sol|reason|rationale)\b\s*[:=.\-]\s*(.*)$/i)){cur.exp=m[1];field='exp';continue}
+      if(m=l.match(/^(?:marks?|points?)\s*[:=]\s*(\d+(?:\.\d+)?)/i)){cur.marks=+m[1];field=null;continue}
+      if(/^\(?[Aa]\s*[.):]\s/.test(l)&&/\s\(?[Bb]\s*[.):]\s/.test(l)){
+        const parts=l.split(/\s*\(?([A-Ha-h])\s*[.):]\s+/).slice(1);
+        for(let i=0;i+1<parts.length;i+=2)cur.opts.push({k:parts[i].toUpperCase(),t:parts[i+1].trim()});
+        field='opt';continue;
+      }
+      if(m=l.match(/^\(?([A-Ha-h])\s*[.):]\s*(.+)$/)){cur.opts.push({k:m[1].toUpperCase(),t:m[2]});field='opt';continue}
+      if(cur.opts.length>=2&&cur.rawAns!=null&&(field==='ans'||(wasBlank&&field!=='exp'))){push();cur=newQ(l);field='q';continue}
+      if(field==='q')cur.text+='\n'+l;
+      else if(field==='exp')cur.exp+=' '+l;
+      else if(field==='opt'&&cur.opts.length)cur.opts[cur.opts.length-1].t+=' '+l;
+      else cur.text+='\n'+l;
+    }else{
+      if(!titled){q.title=l;titled=true}else q.desc+=(q.desc?' ':'')+l;
+    }
+  }
+  push();
+  return toText(q);
+}
+
+function toDraft(i){
+  return i.type==='section'?{type:'section',name:i.name}:
+    {type:'q',text:i.text,optsEdit:i.opts.map(o=>o.t),correct:i.opts.findIndex(o=>i.ans.includes(o.k)),marks:i.marks==null?'':i.marks,exp:i.exp};
+}
+const btns=()=>'<div class="row"><button class="pri" data-act="save">Save</button><button data-act="cancel">Cancel</button></div>';
+function editForm(){
+  const d=ED.d;
+  if(ED.head)return `<div class="q editing"><div class="fld"><label for="e-title">Form title</label><input type="text" id="e-title" value="${esc(d.title)}"></div><div class="fld"><label for="e-desc">Description</label><textarea id="e-desc">${esc(d.desc)}</textarea></div><div class="fld"><label for="e-dm">Default marks per question</label><input type="number" id="e-dm" min="0" step="0.5" value="${esc(String(d.marks))}" placeholder="${S.defMarks}"></div>${btns()}</div>`;
+  if(d.type==='section')return `<div class="q editing"><div class="fld"><label for="e-name">Section name</label><input type="text" id="e-name" value="${esc(d.name)}"></div>${btns()}</div>`;
+  return `<div class="q editing"><div class="fld"><label for="e-text">Question</label><textarea id="e-text">${esc(d.text)}</textarea></div>
+  <div class="fld"><label>Options <span class="hint">(tap the circle for the correct one)</span></label>
+  ${d.optsEdit.map((t,i)=>`<div class="eopt"><input type="radio" name="e-c" value="${i}" ${d.correct===i?'checked':''} aria-label="Correct option ${letter(i)}"><input type="text" class="e-o" value="${esc(t)}" placeholder="Option ${letter(i)}"><button data-act="optdel" data-i="${i}" aria-label="Remove option">&#10005;</button></div>`).join('')}
+  <button data-act="optadd">&#65291; Option</button></div>
+  <div class="fld"><label for="e-marks">Marks <span class="hint">(blank = default ${quiz.marks})</span></label><input type="number" id="e-marks" min="0" step="0.5" value="${esc(String(d.marks))}"></div>
+  <div class="fld"><label for="e-exp">Explanation</label><textarea id="e-exp">${esc(d.exp||'')}</textarea></div>${btns()}</div>`;
+}
+function syncDraft(){
+  const d=ED.d;
+  if(ED.head){d.title=$('e-title').value;d.desc=$('e-desc').value;d.marks=$('e-dm').value;return}
+  if(d.type==='section'){d.name=$('e-name').value;return}
+  d.text=$('e-text').value;d.optsEdit=[...document.querySelectorAll('.e-o')].map(x=>x.value);
+  const r=document.querySelector('input[name=e-c]:checked');d.correct=r?+r.value:-1;
+  d.marks=$('e-marks').value;d.exp=$('e-exp').value;
+}
+function commit(){pushPrev();$('src').value=toText(quiz);$('ok').checked=false;$('js').hidden=true;ED=null;render()}
+function saveEdit(){
+  syncDraft();const d=ED.d;
+  if(ED.head){
+    quiz.title=d.title.trim()||'Untitled Quiz';quiz.desc=d.desc.trim();
+    if(String(d.marks).trim()!==''){quiz.marks=+d.marks;quiz.hasMarks=true}else quiz.hasMarks=false;
+    return commit();
+  }
+  let item;
+  if(d.type==='section')item={type:'section',name:d.name.trim()||'Section'};
+  else{
+    const keep=[];d.optsEdit.forEach((t,i)=>{if(t.trim())keep.push(i)});
+    item={type:'q',text:d.text,opts:keep.map((i,n)=>({k:letter(n),t:d.optsEdit[i]})),
+      ans:keep.indexOf(d.correct)>-1?[letter(keep.indexOf(d.correct))]:[],
+      marks:String(d.marks).trim()===''?null:+d.marks,exp:d.exp};
+  }
+  if(ED.isNew)quiz.items.splice(ED.k+1,0,item);else quiz.items[ED.k]=item;
+  commit();
+}
 
 function render(){
   const text=$('src').value;
@@ -293,29 +534,60 @@ function render(){
   const secs=quiz.items.filter(i=>i.type==='section').length;
   const bad=qs.filter(i=>i.warn.length);
   $('stats').innerHTML=`<div>${esc(quiz.title)}</div><div>${qs.length} <span>questions</span></div><div>${total} <span>total marks</span></div>${secs?`<div>${secs} <span>sections</span></div>`:''}`;
-  $('warns').innerHTML=bad.length?`<div class="warnbox">${bad.length} question(s) need fixing: ${bad.map(b=>'Q'+b.no).join(', ')}</div>`:'';
+  let w=bad.length?`<div class="warnbox">${bad.length} question(s) need fixing: ${bad.map(b=>'Q'+b.no).join(', ')}</div>`:'';
+  const nums=qs.map(i=>i.no),iss=[];
+  nums.forEach((n,k)=>{
+    if(k===0){if(n!==1)iss.push('starts at '+n)}
+    else if(n===nums[k-1])iss.push('Q'+n+' is repeated');
+    else if(n!==nums[k-1]+1)iss.push('jumps from '+nums[k-1]+' to '+n);
+  });
+  if(iss.length)w+=`<div class="note">Numbering: ${iss.join('; ')}. Tap Auto-format to renumber.</div>`;
+  const seen={},dupl=[];
+  qs.forEach(i=>{const n=i.text.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();if(!n)return;if(seen[n]!==undefined)dupl.push('Q'+seen[n]+' and Q'+i.no);else seen[n]=i.no});
+  if(dupl.length)w+=`<div class="note">Possible duplicate questions (same text): ${dupl.join(', ')}.</div>`;
+  if(qs.length>=3){
+    const cnt={};qs.forEach(i=>{const k=i.ans[0];if(k)cnt[k]=(cnt[k]||0)+1});
+    const ks=Object.keys(cnt).sort();
+    w+=`<div class="hint" style="margin-bottom:10px">Answer spread: ${ks.map(k=>k+' '+cnt[k]).join(' · ')}</div>`;
+    const mx=Math.max(0,...Object.values(cnt));
+    if(qs.length>=6&&mx/qs.length>0.5)w+=`<div class="note">More than half the answers are ${ks.find(k=>cnt[k]===mx)}.</div>`;
+  }
+  $('warns').innerHTML=w;
+  const secStat={};let cs=-1;
+  quiz.items.forEach((i,k)=>{if(i.type==='section'){cs=k;secStat[k]={n:0,m:0}}else if(cs>-1){secStat[cs].n++;secStat[cs].m+=i.pts}});
+  const tb=(k,up)=>`<span class="tb"><button data-act="edit" data-k="${k}" aria-label="Edit">&#9998;</button><button data-act="up" data-k="${k}" aria-label="Move up">&#8593;</button><button data-act="down" data-k="${k}" aria-label="Move down">&#8595;</button>${up?'':`<button data-act="addq" data-k="${k}" aria-label="Add question below">&#65291;</button>`}<button data-act="del" data-k="${k}" aria-label="Delete">&#10005;</button></span>`;
   let h='';
-  if(!qs.length)h='<div class="empty">Your preview appears here.</div>';
-  quiz.items.forEach(i=>{
-    if(i.type==='section'){h+=`<div class="sec">${esc(i.name)}</div>`;return}
-    h+=`<div class="q ${i.warn.length?'warn':''}"><span class="pts">${i.pts} mark${i.pts==1?'':'s'}</span><h3><span class="n">${i.no}.</span>${esc(i.text)}</h3>`;
-    i.opts.forEach(o=>h+=`<div class="opt ${i.ans.includes(o.k)?'c':''}"><b>${o.k}</b><span>${esc(o.t)}</span></div>`);
-    if(i.exp)h+=`<div class="exp">Explanation: ${esc(i.exp)}</div>`;
-    i.warn.forEach(w=>h+=`<div class="w">⚠ ${w}</div>`);
-    h+='</div>';
+  if(!qs.length&&!ED)h='<div class="empty">Your preview appears here.</div>';
+  if(ED&&ED.head)h+=editForm();
+  if(S.nameField&&(qs.length||ED))h+=`<div class="q namecard"><span class="pts">0 marks</span><h3>${esc(S.nameLabel||'Name')}</h3><div class="hint">Short answer, required, not graded. Page 1 holds only this field.</div></div>`;
+  if(ED&&ED.isNew&&ED.k===-1)h+=editForm();
+  quiz.items.forEach((i,k)=>{
+    if(ED&&!ED.head&&!ED.isNew&&ED.k===k){h+=editForm();return}
+    if(i.type==='section'){
+      const st=secStat[k];
+      h+=`<div class="sec"><span>${esc(i.name)} <span class="hint">${st.n} question${st.n==1?'':'s'} · ${st.m} marks</span></span>${tb(k,true)}</div>`;
+    }else{
+      h+=`<div class="q ${i.warn.length?'warn':''}"><div class="qh"><span class="pts">${i.pts} mark${i.pts==1?'':'s'}</span>${tb(k)}</div><h3><span class="n">${i.no}.</span>${esc(i.text)}</h3>`;
+      i.opts.forEach(o=>h+=`<div class="opt ${i.ans.includes(o.k)?'c':''}"><b>${o.k}</b><span>${esc(o.t)}</span></div>`);
+      if(i.exp)h+=`<div class="exp">Explanation: ${esc(i.exp)}</div>`;
+      i.warn.forEach(x=>h+=`<div class="w">&#9888; ${x}</div>`);
+      h+='</div>';
+    }
+    if(ED&&ED.isNew&&ED.k===k)h+=editForm();
   });
   $('preview').innerHTML=h;
+  if(ED&&ED.fresh){ED.fresh=false;const f=document.querySelector('.editing');if(f)f.scrollIntoView({block:'center'})}
   gate();
 }
 function gate(){
   const qs=quiz.items.filter(i=>i.type==='q');
-  const ready=$('ok').checked&&qs.length&&!qs.some(i=>i.warn.length);
+  const ready=$('ok').checked&&qs.length&&!qs.some(i=>i.warn.length)&&!ED;
   ['gen','make'].forEach(id=>$(id).disabled=!ready);
 }
 
 /* ---------- Apps Script path ---------- */
 function payload(){
-  return {title:quiz.title,desc:quiz.desc,items:quiz.items.map(i=>i.type==='section'?{s:i.name}:
+  return {title:quiz.title,desc:quiz.desc,name:S.nameField?(S.nameLabel||'Name'):'',email:!!(S.email&&S.email!=='none'),items:quiz.items.map(i=>i.type==='section'?{s:i.name}:
     {q:i.text,o:i.opts.map(o=>o.t),a:i.ans.map(a=>i.opts.findIndex(o=>o.k===a)),p:i.pts,e:i.exp})};
 }
 function buildScript(){
@@ -324,8 +596,10 @@ function buildScript(){
   var f=FormApp.create(data.title);
   f.setIsQuiz(true);
   if(data.desc)f.setDescription(data.desc);
-  data.items.forEach(function(it){
-    if(it.s){f.addPageBreakItem().setTitle(it.s);return;}
+  if(data.email)f.setCollectEmail(true);
+  if(data.name)f.addTextItem().setTitle(data.name).setRequired(true);
+  data.items.forEach(function(it,n){
+    if(it.s){if(n===0&&!data.name)f.addSectionHeaderItem().setTitle(it.s);else f.addPageBreakItem().setTitle(it.s);return;}
     var item=f.addMultipleChoiceItem();
     item.setTitle(it.q).setPoints(it.p).setRequired(${S.required});
     item.setChoices(it.o.map(function(t,i){return item.createChoice(t,it.a.indexOf(i)>-1);}));
@@ -339,67 +613,324 @@ function buildScript(){
 
 /* ---------- Direct API path ---------- */
 async function api(token,url,body){
-  const r=await fetch(url,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(body)});
-  const j=await r.json();if(!r.ok)throw new Error(j.error?.message||'Request failed');return j;
+  const r=await fetch(url,{method:body?'POST':'GET',headers:{Authorization:'Bearer '+token,...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined});
+  const j=await r.json();if(!r.ok)throw new Error((j.error?.message||'Request failed')+(r.status===404?' (404)':''));return j;
+}
+function buildItems(){
+  const items=[];
+  if(S.nameField)items.push({title:S.nameLabel||'Name',questionItem:{question:{required:true,textQuestion:{paragraph:false}}}});
+  quiz.items.forEach((i,n)=>{
+    if(i.type==='section'){
+      items.push(n===0&&!S.nameField?{title:i.name,textItem:{}}:{title:i.name,pageBreakItem:{}});return;
+    }
+    const fb=i.exp?{text:i.exp}:undefined;
+    const it={title:i.text,questionItem:{question:{required:S.required,
+      grading:{pointValue:i.pts,correctAnswers:{answers:i.ans.map(a=>({value:i.opts.find(o=>o.k===a).t}))},...(fb?{whenRight:fb,whenWrong:fb}:{})},
+      choiceQuestion:{type:'RADIO',shuffle:S.shuffle,options:i.opts.map(o=>({value:o.t}))}}}};
+    items.push(it);
+  });
+  return items;
+}
+let editingId=null;
+const loadForms=()=>{try{return JSON.parse(localStorage.getItem('quizforms')||'[]')}catch(e){return[]}};
+const saveForms=a=>{try{localStorage.setItem('quizforms',JSON.stringify(a))}catch(e){}};
+function upsertForm(f){
+  const a=loadForms();const i=a.findIndex(x=>x.id===f.id);
+  if(i>-1)a[i]={...a[i],...f};else a.unshift(f);
+  saveForms(a);renderForms();
 }
 function createDirect(){
   const out=m=>$('result').innerHTML=m;
-  const fail=m=>{out(`<div class="warnbox">${esc(m)}</div>`);$('settings').hidden=false};
+  const fail=m=>{out(`<div class="warnbox">${esc(m)}${/Settings/.test(m)?' Tap the red badge at the top to open Settings.':''}</div>`)};
+  const updating=editingId;
   out('<p class="hint">Signing in…</p>');
   getToken(async tok=>{
-    out('<p class="hint">Creating form…</p>');
+    out(`<p class="hint">${updating?'Updating':'Creating'} form…</p>`);
     try{
-      const f=await api(tok,'https://forms.googleapis.com/v1/forms',{info:{title:quiz.title,documentTitle:quiz.title}});
-      const reqs=[{updateSettings:{settings:{quizSettings:{isQuiz:true}},updateMask:'quizSettings.isQuiz'}}];
-      if(quiz.desc)reqs.push({updateFormInfo:{info:{description:quiz.desc},updateMask:'description'}});
-      let idx=0;
-      quiz.items.forEach(i=>{
-        let item;
-        if(i.type==='section')item={title:i.name,pageBreakItem:{}};
-        else{
-          const fb=i.exp?{text:i.exp}:undefined;
-          item={title:i.text,questionItem:{question:{required:S.required,
-            grading:{pointValue:i.pts,correctAnswers:{answers:i.ans.map(a=>({value:i.opts.find(o=>o.k===a).t}))},...(fb?{whenRight:fb,whenWrong:fb}:{})},
-            choiceQuestion:{type:'RADIO',shuffle:S.shuffle,options:i.opts.map(o=>({value:o.t}))}}}};
-        }
-        reqs.push({createItem:{item,location:{index:idx++}}});
-      });
-      await api(tok,`https://forms.googleapis.com/v1/forms/${f.formId}:batchUpdate`,{requests:reqs});
-      const link=f.responderUri||`https://docs.google.com/forms/d/${f.formId}/viewform`;
-      out(`<div class="link"><b>Form created.</b><br>Share: <a href="${link}" target="_blank" rel="noopener">${link}</a><br>Edit: <a href="https://docs.google.com/forms/d/${f.formId}/edit" target="_blank" rel="noopener">open editor</a></div>`);
+      const items=buildItems();
+      const qn=quiz.items.filter(i=>i.type==='q').length;
+      let id=updating,link,reqs=[];
+      if(updating){
+        const cur=await api(tok,`https://forms.googleapis.com/v1/forms/${updating}`);
+        for(let k=0;k<(cur.items||[]).length;k++)reqs.push({deleteItem:{location:{index:0}}});
+        link=cur.responderUri;
+        reqs.push({updateFormInfo:{info:{title:quiz.title,description:quiz.desc||''},updateMask:'title,description'}});
+      }else{
+        const f=await api(tok,'https://forms.googleapis.com/v1/forms',{info:{title:quiz.title,documentTitle:quiz.title}});
+        id=f.formId;link=f.responderUri;
+        if(quiz.desc)reqs.push({updateFormInfo:{info:{description:quiz.desc},updateMask:'description'}});
+      }
+      const st={quizSettings:{isQuiz:true}};let mask='quizSettings.isQuiz';
+      if(S.email&&S.email!=='none'){st.emailCollectionType=S.email;mask+=',emailCollectionType'}
+      reqs.unshift({updateSettings:{settings:st,updateMask:mask}});
+      items.forEach((item,k)=>reqs.push({createItem:{item,location:{index:k}}}));
+      await api(tok,`https://forms.googleapis.com/v1/forms/${id}:batchUpdate`,{requests:reqs});
+      link=link||`https://docs.google.com/forms/d/${id}/viewform`;
+      const edit=`https://docs.google.com/forms/d/${id}/edit`;
+      upsertForm({id,title:quiz.title,link,edit,qn,text:$('src').value,updated:Date.now(),...(updating?{}:{created:Date.now()})});
+      editingId=id;editBar();
+      out(`<div class="link"><b>Form ${updating?'updated':'created'}.</b><br>Share: <a href="${link}" target="_blank" rel="noopener">${link}</a><br>Edit in Google: <a href="${edit}" target="_blank" rel="noopener">open editor</a><div class="row"><button id="cpl">Copy share link</button></div></div>`);
+      $('cpl').onclick=()=>navigator.clipboard.writeText(link);
     }catch(e){
-      if(/credential|expired|401/i.test(e.message)){try{localStorage.removeItem('quiztok')}catch(_){}}
-      fail(e.message);
+      if(/credential|expired|401|invalid authentication/i.test(e.message)){try{localStorage.removeItem('quiztok')}catch(_){}}
+      fail(e.message+(/404/.test(e.message)?' — this form may have been deleted in Google. Remove it from My forms.':''));
     }
   },fail);
 }
+function editBar(){
+  const f=loadForms().find(x=>x.id===editingId);
+  $('editbar').innerHTML=f?`<div>Editing: <b>${esc(f.title)}</b><br><span class="hint">Saving updates the same link. All questions are replaced; existing responses stay in Google.</span></div><button id="stopedit">Create as new instead</button>`:'';
+  $('make').textContent=f?'Update this form':'Create Google Form';
+  const b=$('stopedit');if(b)b.onclick=()=>{editingId=null;editBar()};
+}
+function fmt(t){return t?new Date(t).toLocaleString([], {dateStyle:'medium',timeStyle:'short'}):''}
+function renderForms(){
+  const a=loadForms();
+  $('flist').innerHTML=a.length?a.map(f=>`<div class="fcard"><h3>${esc(f.title)}</h3>
+    <div class="hint">${f.qn||0} questions · ${f.created&&f.created!==f.updated?'updated':'created'} ${fmt(f.updated||f.created)}</div>
+    <div class="row">
+      <button data-a="edit" data-id="${f.id}" class="pri">Edit here</button>
+      <button data-a="print" data-id="${f.id}">Print</button>
+      <button data-a="open" data-id="${f.id}">Open form</button>
+      <button data-a="google" data-id="${f.id}">Google editor</button>
+      <button data-a="copy" data-id="${f.id}">Copy link</button>
+      <button data-a="del" data-id="${f.id}">Remove</button>
+    </div></div>`).join(''):'<div class="empty">Forms you create here will be listed here.</div>';
+  $('flist').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const f=loadForms().find(x=>x.id===b.dataset.id);if(!f)return;
+    const a=b.dataset.a;
+    if(a==='edit'){$('src').value=f.text||'';ED=null;editingId=f.id;$('ok').checked=false;$('result').innerHTML='';render();editBar();setView('edit');window.scrollTo(0,0)}
+    else if(a==='print')openPrint(f.id);
+    else if(a==='open')window.open(f.link,'_blank','noopener');
+    else if(a==='google')window.open(f.edit,'_blank','noopener');
+    else if(a==='copy')navigator.clipboard.writeText(f.link);
+    else if(a==='del'&&confirm('Remove from this list? The form stays in your Google account.')){saveForms(loadForms().filter(x=>x.id!==f.id));if(editingId===f.id)editingId=null;editBar();renderForms()}
+  });
+}
+
+/* ---------- print ---------- */
+const PRD={form:null,data:null};
+function printOpts(){S.print={layout:'each',marks:true,name:true,exp:true,...(S.print||{})};return S.print}
+function fromParsed(q){
+  return {title:q.title==='Untitled Quiz'?'':q.title,desc:q.desc||'',items:q.items.map(i=>i.type==='section'?{type:'section',name:i.name}:
+    {type:'q',text:i.text,opts:i.opts.map(o=>({t:o.t})),ans:i.opts.findIndex(o=>i.ans.includes(o.k)),exp:i.exp||'',pts:i.pts})};
+}
+function fromGoogle(f){
+  const items=[],img=x=>x?(x.contentUri||x.sourceUri||''):'';
+  (f.items||[]).forEach(it=>{
+    const t=(it.title||'').trim();
+    if(it.pageBreakItem||it.textItem){if(t)items.push({type:'section',name:t});return}
+    if(it.imageItem){const u=img(it.imageItem.image);if(u)items.push({type:'image',src:u});return}
+    const qi=it.questionItem;if(!qi||!qi.question)return;
+    const q=qi.question,g=q.grading||{};
+    if(q.choiceQuestion){
+      const opts=(q.choiceQuestion.options||[]).map(o=>({t:o.value||'',img:img(o.image)}));
+      const cor=((g.correctAnswers||{}).answers||[])[0];
+      items.push({type:'q',text:t,img:img(qi.image),opts,ans:cor?opts.findIndex(o=>o.t===cor.value):-1,exp:(g.whenRight&&g.whenRight.text)||(g.generalFeedback&&g.generalFeedback.text)||'',pts:g.pointValue??0});
+    }else if(q.textQuestion){
+      const low=t.toLowerCase();
+      if(low===(S.nameLabel||'name').toLowerCase()||/^(name|e-?mail)\b/.test(low))return;
+      items.push({type:'q',text:t,img:img(qi.image),opts:[],ans:-1,exp:'',pts:g.pointValue??0});
+    }
+  });
+  return {title:(f.info&&f.info.title)||'',desc:(f.info&&f.info.description)||'',items};
+}
+function sheetHTML(d,o){
+  const qs=d.items.filter(i=>i.type==='q'),total=qs.reduce((a,i)=>a+(+i.pts||0),0);
+  let h=`<h1>${esc(d.title||'Untitled')}</h1>`;
+  if(d.desc)h+=`<div class="pdesc">${esc(d.desc)}</div>`;
+  if(o.name)h+=`<div class="pname"><span>Name:</span><span class="ln"></span><span>Date:</span><span class="ln sm"></span>${o.marks?`<span>Marks: ____ / ${total}</span>`:''}</div>`;
+  let n=0;const key=[];
+  d.items.forEach(i=>{
+    if(i.type==='section'){h+=`<h2>${esc(i.name)}</h2>`;return}
+    if(i.type==='image'){h+=`<img class="pi" src="${esc(i.src)}" alt="">`;return}
+    n++;
+    const L=i.ans>=0?letter(i.ans):'',at=i.ans>=0&&i.opts[i.ans]?i.opts[i.ans].t:'';
+    key.push({n,L,at,exp:i.exp});
+    h+=`<div class="pq"><div class="pqt">${o.marks?`<span class="pm">[${i.pts}]</span>`:''}<b>${n}.</b> ${esc(i.text)}</div>`;
+    if(i.img)h+=`<img class="pi" src="${esc(i.img)}" alt="">`;
+    if(i.opts.length){
+      const row=i.opts.length<=4&&i.opts.every(p=>!p.img&&p.t.length<=16);
+      h+=`<div class="po${row?' row':''}">`+i.opts.map((p,k)=>`<div><b>${letter(k)}.</b> ${p.img?`<img class="pi s" src="${esc(p.img)}" alt="">`:''}${esc(p.t)}</div>`).join('')+'</div>';
+    }else h+='<div class="aline"></div>';
+    if(o.layout==='each'){
+      h+=`<div class="pa"><b>Answer:</b> ${L?L+'. '+esc(at):'—'}`;
+      if(o.exp&&i.exp)h+=`<div class="px"><b>Explanation:</b> ${esc(i.exp)}</div>`;
+      h+='</div>';
+    }
+    h+='</div>';
+  });
+  if(o.layout==='end'&&key.length){
+    h+=`<h2 class="pb">Answer key</h2><div class="pkey">${key.map(k=>`<span>${k.n} ${k.L||'–'}</span>`).join('')}</div>`;
+    h+='<h2>Answers'+(o.exp?' and explanations':'')+'</h2>';
+    key.forEach(k=>{h+=`<div class="pe"><b>${k.n}. ${k.L||'–'}</b>${k.at?' : '+esc(k.at):''}${o.exp&&k.exp?`<div><b>Explanation:</b> ${esc(k.exp)}</div>`:''}</div>`});
+  }
+  return h;
+}
+const drawSheet=()=>{$('sheet').innerHTML=sheetHTML(PRD.data,printOpts())};
+function useText(){
+  const f=PRD.form?loadForms().find(x=>x.id===PRD.form):null;
+  PRD.data=fromParsed(parse(f?(f.text||''):$('src').value));
+}
+async function loadPrintData(){
+  const msg=$('pv-msg');msg.textContent='';
+  if(PRD.form&&$('pv-src').value==='google'){
+    $('sheet').innerHTML='<div class="empty">Loading from Google…</div>';
+    try{
+      PRD.data=await new Promise((res,rej)=>getToken(async tok=>{
+        try{res(fromGoogle(await api(tok,'https://forms.googleapis.com/v1/forms/'+PRD.form)))}catch(e){rej(e)}
+      },m=>rej(new Error(m))));
+      msg.textContent='Loaded live from Google, including images and edits made there. Name and email fields are skipped.';
+    }catch(e){
+      msg.textContent='Could not load from Google ('+e.message+'). Showing the saved text instead.';
+      $('pv-src').value='text';useText();
+    }
+  }else{useText();if(!PRD.data.items.some(i=>i.type==='q'))msg.textContent='No questions to print yet.'}
+  drawSheet();
+}
+function openPrint(formId){
+  PRD.form=formId||null;
+  const o=printOpts();
+  $('pv-lay').value=o.layout;$('pv-exp').checked=o.exp;$('pv-marks').checked=o.marks;$('pv-name').checked=o.name;
+  $('pv-srcw').hidden=!formId;$('pv-src').value=formId?'google':'text';
+  $('pv').hidden=false;$('pv').scrollTop=0;document.body.style.overflow='hidden';
+  loadPrintData();
+}
+const closePrint=()=>{$('pv').hidden=true;document.body.style.overflow=''};
+$('pv-close').onclick=closePrint;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('pv').hidden)closePrint()});
+$('pv-print').onclick=()=>window.print();
+$('pv-src').onchange=loadPrintData;
+[['pv-lay','layout','value'],['pv-exp','exp','checked'],['pv-marks','marks','checked'],['pv-name','name','checked']].forEach(([id,k,prop])=>{
+  $(id).onchange=()=>{printOpts();S.print[k]=$(id)[prop];save();drawSheet()};
+});
 
 /* ---------- wiring ---------- */
-$('src').addEventListener('input',render);
+$('src').addEventListener('input',()=>{ED=null;render()});
 $('ok').addEventListener('change',gate);
-$('sample').onclick=()=>{$('src').value=SAMPLE;render()};
-$('clear').onclick=()=>{$('src').value='';$('ok').checked=false;$('js').hidden=true;render()};
-$('copyfmt').onclick=()=>navigator.clipboard.writeText($('guide').textContent);
+$('sample').onclick=()=>{
+  if($('src').value.trim()&&!confirm('Load sample replaces the text in the editor. You can undo it with the undo button. Continue?'))return;
+  pushPrev();$('src').value=SAMPLE;$('ok').checked=false;ED=null;render();$('toolmsg').textContent='Sample loaded. Use the undo button in the editor to go back.';
+};
+$('clr').onclick=()=>{
+  if(!$('src').value.trim())return;
+  if(!confirm('Clear all text? Everything in the editor will be removed. You can still undo it with the undo button.'))return;
+  pushPrev();$('src').value='';$('ok').checked=false;ED=null;render();$('emsg').textContent='Cleared. Tap the undo button to bring it back.';
+};
+$('fmt').onclick=()=>{
+  const cur=$('src').value;if(!cur.trim())return;
+  const t=autoFormat(cur);
+  if(t.trim()===cur.trim()){$('emsg').textContent='Already in the right format.';return}
+  pushPrev();$('src').value=t;$('ok').checked=false;ED=null;render();
+  $('emsg').textContent='Formatted and renumbered. Check the preview, tap undo to go back.';
+};
+const say=m=>{$('emsg').textContent=m;$('pmsg').textContent=m};
+const copy=async t=>{try{await navigator.clipboard.writeText(t);return true}catch(e){return false}};
+function reviewPrompt(text){
+  return `You are an experienced exam editor and subject expert. Review the quiz below. It will be turned into a Google Forms quiz.
+
+Check every question carefully:
+1. Is the question clear, complete and free of spelling or grammar mistakes?
+2. Solve it yourself. Is the marked "Answer:" really correct?
+3. Is exactly ONE option correct? Flag any question where two options are correct or none is.
+4. Are the options distinct, sensible and free of typos?
+5. Is the explanation correct and consistent with the marked answer?
+6. Are any questions duplicated?
+7. Is the formatting exactly as specified below?
+
+Required format (keep it exactly):
+${$('guide').textContent}
+
+Reply with:
+A) A short list of problems found (question number, problem, suggested fix). If everything is fine, write "No problems found".
+B) The complete corrected quiz in the exact format above, inside ONE code block, so I can copy and paste it back. Keep the Title, Description, Default marks, SECTION and Marks lines. Put nothing else inside the code block.
+
+Quiz:
+<<<
+${text.trim()}
+>>>`;
+}
+document.addEventListener('click',async e=>{
+  if(e.target.closest('.cptext')){const t=$('src').value;if(!t.trim())return say('Nothing to copy yet.');say(await copy(t)?'All text copied.':'Copy failed. Select the text and copy manually.');return}
+  if(e.target.closest('.prt')){if(!$('src').value.trim())return say('Add your exam text first.');openPrint(null);return}
+  if(e.target.closest('.cpfmt')){say(await copy($('guide').textContent)?'Format guide copied.':'Copy failed.');return}
+  if(e.target.closest('.rvw')){
+    const t=$('src').value;if(!t.trim())return say('Add your exam text first.');
+    const pr=reviewPrompt(t),url='https://chatgpt.com/?q='+encodeURIComponent(pr);
+    const long=url.length>7000;
+    window.open(long?'https://chatgpt.com/':url,'_blank','noopener');
+    const ok=await copy(pr);
+    say(long?(ok?'Your exam is long, so the review prompt is copied. Paste it into ChatGPT.':'Exam too long to send by link. Use the copy button and paste it into ChatGPT.'):'Opened ChatGPT with your exam. The prompt is also copied.');
+    return;
+  }
+  if(!e.target.closest('.undo'))return;
+  const p=getPrev();if(p===null)return;
+  const cur=$('src').value;try{localStorage.setItem('quizprev',cur)}catch(_){}
+  $('src').value=p;ED=null;render();updUndo();$('emsg').textContent='Previous text restored. Tap undo again to redo.';
+});
+$('prev').addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const a=b.dataset.act,k=+b.dataset.k,it=quiz.items;
+  if(a==='head'){ED={head:true,fresh:true,d:{title:quiz.title==='Untitled Quiz'?'':quiz.title,desc:quiz.desc,marks:quiz.hasMarks?quiz.marks:''}};return render()}
+  if(a==='edit'){ED={k,isNew:false,fresh:true,d:toDraft(it[k])};return render()}
+  if(a==='addq'){ED={k:isNaN(k)?it.length-1:k,isNew:true,fresh:true,d:{type:'q',text:'',optsEdit:['','','',''],correct:-1,marks:'',exp:''}};return render()}
+  if(a==='addsec'){ED={k:it.length-1,isNew:true,fresh:true,d:{type:'section',name:''}};return render()}
+  if(a==='up'||a==='down'){const j=a==='up'?k-1:k+1;if(j<0||j>=it.length)return;[it[k],it[j]]=[it[j],it[k]];return commit()}
+  if(a==='del'){if(it[k].type==='q'&&!confirm('Delete this question? You can undo it with the undo button.'))return;it.splice(k,1);return commit()}
+  if(a==='optadd'){syncDraft();ED.d.optsEdit.push('');return render()}
+  if(a==='optdel'){syncDraft();const i=+b.dataset.i,d=ED.d;d.optsEdit.splice(i,1);if(d.correct===i)d.correct=-1;else if(d.correct>i)d.correct--;return render()}
+  if(a==='cancel'){ED=null;return render()}
+  if(a==='save')return saveEdit();
+});
+$('copyfmt').onclick=()=>navigator.clipboard.writeText($('guide').textContent);updUndo();
 $('gen').onclick=()=>{$('js').textContent=buildScript();$('js').hidden=false;$('copyjs').disabled=false};
 $('copyjs').onclick=async()=>{await navigator.clipboard.writeText($('js').textContent);$('copyjs').textContent='Copied'; setTimeout(()=>$('copyjs').textContent='Copy script',1500)};
 $('make').onclick=createDirect;
 $('t1').onclick=()=>{$('p1').hidden=false;$('p2').hidden=true;$('t1').className='on';$('t2').className=''};
 $('t2').onclick=()=>{$('p1').hidden=true;$('p2').hidden=false;$('t2').className='on';$('t1').className=''};
-let saved='';try{saved=localStorage.getItem('quizsrc')||''}catch(e){}
-$('src').value=saved||SAMPLE;
+let saved=null;try{saved=localStorage.getItem('quizsrc')}catch(e){}
+$('src').value=saved===null?'':saved;
+$('bk').onclick=()=>{
+  const data={app:'quiz-to-google-form',v:1,saved:new Date().toISOString(),settings:S,forms:loadForms(),draft:$('src').value};
+  const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,1)],{type:'application/json'}));
+  const a=document.createElement('a');a.href=url;a.download='quiz-maker-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  $('bkmsg').textContent='Backup downloaded. Keep the file somewhere safe.';
+};
+$('rs').onclick=()=>$('rsf').click();
+$('rsf').onchange=async()=>{
+  const f=$('rsf').files[0];if(!f)return;
+  try{
+    const d=JSON.parse(await f.text());
+    if(d.app!=='quiz-to-google-form'||!d.settings)throw new Error('This is not a backup from this tool.');
+    S={...DEF,...d.settings,steps:d.settings.steps||{}};save();
+    const have=loadForms(),ids=new Set(have.map(x=>x.id));
+    const merged=[...have,...(d.forms||[]).filter(x=>x&&x.id&&!ids.has(x.id))];
+    saveForms(merged);
+    if(d.draft)$('src').value=d.draft;
+    renderSettings();renderForms();render();
+    $('bkmsg').textContent='Restored settings and '+(d.forms||[]).length+' form(s).';
+  }catch(e){$('bkmsg').textContent='Restore failed: '+e.message}
+  $('rsf').value='';
+};
 $('gear').onclick=()=>{$('settings').hidden=!$('settings').hidden};
 $('cid').oninput=()=>{S.cid=$('cid').value.trim();save();renderSettings()};
 $('dm').onchange=()=>{S.defMarks=+$('dm').value||1;save();render()};
 $('req').onchange=()=>{S.required=$('req').checked;save()};
 $('shuf').onchange=()=>{S.shuffle=$('shuf').checked;save()};
+$('em').onchange=()=>{S.email=$('em').value;save()};
+$('namef').onchange=()=>{S.nameField=$('namef').checked;save();render()};
+$('namel').oninput=()=>{S.nameLabel=$('namel').value||'Name';save();render()};
 $('reset').onclick=()=>{if(confirm('Clear Client ID and all saved settings?')){try{localStorage.removeItem('quizset');localStorage.removeItem('quiztok')}catch(e){}S={...DEF,steps:{}};renderSettings();render()}};
 $('test').onclick=()=>{$('testmsg').textContent='Opening Google sign-in…';
   getToken(()=>{S.steps[5]=true;save();renderSettings();$('testmsg').textContent='Connected. Setup is complete.'},m=>$('testmsg').textContent=m)};
-const setView=v=>{document.body.dataset.view=v;$('vedit').className=v==='edit'?'on':'';$('vprev').className=v==='prev'?'on':'';window.scrollTo(0,0)};
+const setView=v=>{document.body.dataset.view=v;$('vedit').className=v==='edit'?'on':'';$('vprev').className=v==='prev'?'on':'';$('vforms').className=v==='forms'?'on':'';window.scrollTo(0,0)};
+$('vforms').onclick=()=>setView('forms');
 $('vedit').onclick=()=>setView('edit');$('vprev').onclick=()=>setView('prev');
 document.body.dataset.view='edit';
+renderForms();editBar();
 renderSettings();
-if(!S.cid||onFile)$('settings').hidden=false;
+$('badge').onclick=()=>{$('settings').hidden=false;if(!S.cid||onFile)$('stepsbox').open=true;$('settings').scrollIntoView()};
 render();
 </script>
 </body>
